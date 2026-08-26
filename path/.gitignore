@@ -1,0 +1,80 @@
+# --- Python Standard ---
+*.py[cod]
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Translations
+*.mo
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+test.json
+*.pickle
+venv
+.idea
+*.vscode/
+.DS_Store
+
+# notebooks checkpoints
+*/**/.ipynb_checkpoints/*
+
+# --- Logs & ML Artifacts ---
+*/**/checkpoints/*
+*/**/mlruns/*
+*/**/tensorboard_logs/*
+*/**/wandb/*
+checkpoints/
+wandb/
+mlruns/
+
+# --- Specific Ignore for your Project ---
+
+# 忽略訓練出來的模型資料夾 (位於 mario_gpt/ 下)
+mario_gpt/Mario-GPT2-700-context-length/
+mario_gpt/Mario-GPT2-*/
+multi_iter_test*
+Mario-GPT2-*
+iteration_*
+*_FULL_*
+*_NOFULL_*
+
+# 雙重保險：忽略任何位置的 Mario-GPT2 開頭資料夾
+Mario-GPT2-*/
+
+# 忽略大型模型權重檔 (這是導致 git add 卡住的主因)
+# 您的結構中有 pytorch_model.bin，這個一定要忽略
+*.bin
+*.pt
+*.pth
+*.safetensors
+*.ckpt
+
+# 忽略打包資訊 (您的結構中有 mario_gpt.egg-info)
+*.egg-info/
