@@ -12,7 +12,7 @@ if [ $? -ne 0 ]; then
     echo "[ERROR] pip install -e . failed. Aborting."
     exit 1
 fi
-cd mario_gpt || exit 1
+cd mario_gpt_path || exit 1
 python diff_LR_train.py
 if [ $? -ne 0 ]; then
     echo "[ERROR] Training failed."

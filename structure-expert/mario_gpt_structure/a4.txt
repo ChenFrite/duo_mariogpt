@@ -1,0 +1,29 @@
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+Loading model Structure-GPT2-v2/iteration_10000, tokenizer shyamsn97/Mario-GPT2-700-context-length ...
+Using Structure-GPT2-v2/iteration_10000 lm
+Using shyamsn97/Mario-GPT2-700-context-length tokenizer
+Using path: test_path.txt, width=100
+
+=== Running 5 trials each ===
+
+  [search step 0] num_cols=2 chose cand (rollout reward=1.875)
+  [search step 1] num_cols=4 chose cand (rollout reward=1.819)
+  [search step 2] num_cols=6 chose cand (rollout reward=1.819)
+  [search step 3] num_cols=8 chose cand (rollout reward=1.819)
+[trial 0] greedy=1.875 (calls=4)  search=1.819 (calls=28)
+[trial 1] greedy=1.875 (calls=4)  search=1.875 (calls=28)
+[trial 2] greedy=1.750 (calls=4)  search=1.875 (calls=28)
+[trial 3] greedy=1.750 (calls=4)  search=1.875 (calls=28)
+[trial 4] greedy=1.875 (calls=4)  search=1.875 (calls=28)
+
+=== Summary ===
+Greedy : reward 1.825 ± 0.061  | avg propose calls 4.0
+Search : reward 1.864 ± 0.022  | avg propose calls 28.0
+
+Search reward gain: +0.039  (at 7.0x propose cost)
+→ 搜索找到更高 reward（用更多 LLM 呼叫換取）

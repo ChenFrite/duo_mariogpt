@@ -13,7 +13,7 @@ with open(path.join(this_directory, 'README.md'), encoding='utf-8') as f:
 
 
 setup(
-    name="mario-gpt",
+    name="mario-gpt-path",
     version="0.1.8.137.2",
     url="https://github.com/shyamsn97/mario-gpt",
     license='MIT',

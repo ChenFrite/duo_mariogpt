@@ -1,0 +1,88 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand*\HyPL@Entry[1]{}
+\citation{sudhakaran2023}
+\citation{summerville2015}
+\citation{khalifa2020}
+\citation{nam2024}
+\citation{feng2023}
+\citation{anthony2017}
+\citation{silver2018}
+\citation{nam2024}
+\HyPL@Entry{0<</S/D>>}
+\@writefile{toc}{\contentsline {section}{\numberline {1}問題：自回歸關卡生成無法回頭}{1}{section.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{定位。}{1}{section*.1}\protected@file@percent }
+\citation{kool2019}
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces Comparison between standard MDP and our sampled-action MDP formulation.}}{2}{table.1}\protected@file@percent }
+\newlabel{tab:mdp_comparison}{{1}{2}{Comparison between standard MDP and our sampled-action MDP formulation}{table.1}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {2}方法}{2}{section.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Problem Formulation}{2}{subsection.2.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{State Space.}{2}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{PATH Semantics.}{2}{section*.3}\protected@file@percent }
+\newlabel{eq:path_semantics}{{1}{2}{PATH Semantics}{equation.2.1}{}}
+\citation{kool2019}
+\citation{kool2019}
+\@writefile{toc}{\contentsline {paragraph}{Action Space and Proposal Mechanism.}{3}{section*.4}\protected@file@percent }
+\newlabel{eq:action_proposal}{{2}{3}{Action Space and Proposal Mechanism}{equation.2.2}{}}
+\newlabel{eq:local_action_set}{{3}{3}{Action Space and Proposal Mechanism}{equation.2.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Transition Dynamics.}{3}{section*.5}\protected@file@percent }
+\newlabel{eq:transition}{{4}{3}{Transition Dynamics}{equation.2.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Reward Structure.}{3}{section*.6}\protected@file@percent }
+\newlabel{eq:path_exec}{{5}{3}{Reward Structure}{equation.2.5}{}}
+\newlabel{eq:joint_feasibility}{{6}{3}{Reward Structure}{equation.2.6}{}}
+\newlabel{eq:path_progress}{{7}{3}{Reward Structure}{equation.2.7}{}}
+\newlabel{eq:terminal_reward}{{8}{4}{Reward Structure}{equation.2.8}{}}
+\@writefile{toc}{\contentsline {paragraph}{Policy and Improvement Objective.}{4}{section*.7}\protected@file@percent }
+\newlabel{eq:improved_policy}{{9}{4}{Policy and Improvement Objective}{equation.2.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Key Extensions over Standard MDP.}{4}{section*.8}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Objective.}{4}{section*.9}\protected@file@percent }
+\newlabel{eq:distillation_loss}{{10}{4}{Objective}{equation.2.10}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}STRUCTURE--PATH Semantic Grounding and Executable Verification}{4}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:semantic_grounding}{{2.2}{4}{STRUCTURE--PATH Semantic Grounding and Executable Verification}{subsection.2.2}{}}
+\citation{kool2019}
+\citation{hubert2021}
+\citation{danihelka2022}
+\@writefile{toc}{\contentsline {paragraph}{Exact prefix verification at internal nodes.}{5}{section*.10}\protected@file@percent }
+\newlabel{eq:prefix_verify}{{14}{5}{Exact prefix verification at internal nodes}{equation.2.14}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Sampled-action MDP}{5}{subsection.2.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Gumbel 搜尋與 Semantic Completability}{5}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:completion_value}{{2.4}{5}{Gumbel 搜尋與 Semantic Completability}{subsection.2.4}{}}
+\newlabel{eq:semantic_completability}{{16}{5}{Gumbel 搜尋與 Semantic Completability}{equation.2.16}{}}
+\@writefile{toc}{\contentsline {paragraph}{存在量詞的 value target。}{6}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{為什麼是 Gumbel。}{6}{section*.12}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.5}Completed-Q 蒸餾：search-improved LLM}{6}{subsection.2.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.6}理論命題（規劃中）}{6}{subsection.2.6}\protected@file@percent }
+\citation{lightzero}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.7}方法圖}{7}{subsection.2.7}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces 每一步由雙專家 MarioGPT 以 SBS 提案 $K$ 個候選，Sequential Halving 以 semantic completability value 評估葉節點；終端由 physics-aware $A^*$ 分別驗證一般通關與 PATH action semantics 的可執行性，再結合 STRUCT/PATH adherence。從 completed-Q 改良分布抽樣下一段。虛線為 AlphaZero 式外圈：$\pi '$ 蒸餾回 Structure Expert 的 LoRA。}}{7}{figure.1}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {3}貢獻}{7}{section.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}實作：雙專家 MarioGPT + LightZero}{7}{section.4}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {5}實驗設計（期刊等級）}{10}{section.5}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces 實驗設計}}{10}{table.2}\protected@file@percent }
+\newlabel{tab:exp}{{2}{10}{實驗設計}{table.2}{}}
+\citation{summerville2015}
+\citation{khalifa2020}
+\citation{nam2024}
+\citation{shu2021}
+\citation{sudhakaran2023}
+\citation{anthony2017}
+\citation{silver2018}
+\citation{hubert2021}
+\citation{danihelka2022}
+\citation{kool2019}
+\citation{feng2023}
+\bibcite{sudhakaran2023}{1}
+\bibcite{summerville2015}{2}
+\bibcite{khalifa2020}{3}
+\bibcite{nam2024}{4}
+\bibcite{shu2021}{5}
+\bibcite{anthony2017}{6}
+\bibcite{silver2018}{7}
+\bibcite{hubert2021}{8}
+\bibcite{danihelka2022}{9}
+\bibcite{kool2019}{10}
+\bibcite{feng2023}{11}
+\bibcite{lightzero}{12}
+\@writefile{toc}{\contentsline {section}{\numberline {6}與第二篇的關係}{11}{section.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}相關工作定位}{11}{section.7}\protected@file@percent }
+\gdef \@abspage@last{11}

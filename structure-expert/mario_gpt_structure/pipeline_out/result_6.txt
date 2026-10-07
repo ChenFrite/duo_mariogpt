@@ -1,0 +1,16 @@
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+------------------------------------------------------------------ooooSSSSSSSSS---------------------
+------------------------------------------------------X---------------SS-----SS---------------------
+----ooooooo----------E------------------E---------E----E------X-------SS-----SS-----------ooo-------
+-SSSSSSSSSSSS--E---SSSSSSS?SSSS------SSSS----X---S?SSSSSS-----XSLL-E---S-----SS---X-----------------
+X-------------<>-----------------------------X----------------X---------------S---X--X-E------------
+X---E---------[]----ooo----------------------X--------<>------X-------E-------S---X--XSS------------
+Kooo?Soooooooo[]KK-----oooooooooooKKK---oooooX---oooo-[]------X-----------E---S---X--XoS---------K--
+-K-SSSSSSSSSSS[K--K--SSSSSSSSSSSSK---K-SSSSSSX---XX<>E[]-----oCCCCCooooooo---SSSS-X--Xo---------K-K-
+--------------<----K------------K---------------------<>------UUUUU--EE-E-----------CCoooooooo-K----
+-oK---------------------------------------------------E-------UUUUU-----------E-----CCo-------------
+---WMMMMMMMMMMJ-----WMMMMMMMMMMJ------WMMMMMMMMMMMMMMMMMMMMMMMAAAAAMMMMMMMMMMMMMMMMMAAMMMMMMMMJ----W
+---XXXXXXXXXXXX-----XXXXXXXXXXXX------XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX----X
+
+使用的PROMPT: "many pipes, many enemies, many blocks, many rects, some coins, low elevation, "

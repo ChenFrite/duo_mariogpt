@@ -15,7 +15,7 @@ if [ $? -ne 0 ]; then
     echo "[ERROR] pip install -e . failed (path). Aborting."
     exit 1
 fi
-cd mario_gpt || exit 1
+cd mario_gpt_path || exit 1
 python multi_test.py --count "$COUNT"
 if [ $? -ne 0 ]; then
     echo "[ERROR] Path expert failed. Aborting."

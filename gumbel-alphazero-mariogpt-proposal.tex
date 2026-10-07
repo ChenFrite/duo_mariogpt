@@ -1,0 +1,356 @@
+% !TEX program = xelatex
+\documentclass[11pt,a4paper]{article}
+\usepackage[margin=2.2cm]{geometry}
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setCJKmainfont{Noto Serif CJK TC}
+\setmainfont{TeX Gyre Termes}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,array,tabularx}
+\usepackage{enumitem}
+\usepackage{float}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+\usepackage[colorlinks,linkcolor=black,citecolor=black,urlcolor=blue!50!black]{hyperref}
+\setlength{\parskip}{4pt}
+\setlist{nosep,leftmargin=1.6em}
+\renewcommand{\figurename}{圖}
+\renewcommand{\tablename}{表}
+\renewcommand{\refname}{參考文獻}
+\newtheorem{proposition}{Proposition}
+
+\newcommand{\Gp}{\mathcal{G}}
+\newcommand{\lv}{\ell}
+\newcommand{\cond}{c}
+
+\title{\vspace{-1.2cm}Search-Improved Level Generation：\\以雙專家 MarioGPT 為先驗的 Gumbel AlphaZero 關卡規劃\\
+\large Gumbel AlphaZero with a Structure/Action-Semantic-Path-Conditioned Level LLM as Policy Prior}
+\author{Lung-Pin Chen}
+\date{第一篇\quad 目標：IEEE Transactions on Games（期刊）；會議備案 AIIDE / CoG}
+
+\begin{document}
+\maketitle
+\vspace{-0.6cm}
+
+%=====================================================================
+\section{問題：自回歸關卡生成無法回頭}
+MarioGPT~\cite{sudhakaran2023} 一類的關卡語言模型逐欄生成，每一步只看得到前綴。給定 STRUCT / PATH 條件時，模型無法預見「這段結構接上去之後，關卡是否仍可通關、未來的 PATH semantics 是否仍可實現」。當條件已不可能滿足時，只能硬生成或整張重抽。這是條件式序列生成的通病，在關卡生成中特別嚴重，因為可行性（可通關）與設計意圖的可執行性都不是單純的局部軟偏好。
+
+本研究中的 \textbf{PATH 並非單純的地圖幾何曲線}。PATH 是沿著指定幾何路徑排列的一串 game-playing action tokens，例如 MOVE、JUMP、HIGH\_JUMP、FALL、LAND 等，因此本身已具有明確的 traversal semantics。現有雙專家 MarioGPT 已能在同一生成過程中同時維持 STRUCTURE 合法性並 follow PATH condition；但兩者的融合發生在\textbf{兩個不同層級}：PATH 以 action tokens 在輸入序列層級注入（path token 直接取代地圖中的空白 tile 並以 forced decoding 固定其位置），STRUCT 條件則經 cross-attention 注入，\textbf{尚未顯式驗證「生成的 STRUCTURE 是否真的實現 PATH action semantics」}。例如 STRUCTURE 本身可以合法、PATH 也要求 HIGH\_JUMP，但若跳躍區上方有 solid block，兩個條件各自看似合理，聯合起來卻不可執行。
+
+因此本篇要補上的不是新的 PATH 表示，而是 \textbf{STRUCTURE--PATH semantic grounding}：把原本並列的 STRUCTURE / PATH conditioning，提升成可由遊戲動力學執行與驗證的 joint semantics，並讓搜尋前瞻目前的結構選擇是否會使後續 PATH action tokens 失去可實現性。
+
+搜尋是自然的解法，但既有工作各有缺口：
+\begin{itemize}
+\item \textbf{MCMCTS}~\cite{summerville2015}：MCTS 引導 Markov chain 生成 Mario 關卡，reward 為可解性、缺口與敵人數。生成器弱、依賴隨機 rollout、搜尋結果不回饋生成器。
+\item \textbf{RL 生成器}~\cite{khalifa2020,nam2024}：動作是固定的內容放置操作，動作空間不開放；Nam et al. 每步跑 agent 模擬計算 reward，成本高。
+\item \textbf{MarioGPT 的 novelty search}：進化式外圈，不是每步的前瞻。
+\item \textbf{LLM + MCTS}（RAP、LATS、TS-LLM~\cite{feng2023}）：集中在 reasoning / code，無 2D 空間結構、無可執行的 ground-truth 可行性 reward。
+\end{itemize}
+本研究的目標：把 AlphaZero 式的 expert iteration~\cite{anthony2017,silver2018}——搜尋當 expert、蒸餾回 policy——帶進條件式關卡 LLM，並處理 level generation 與 game-playing search 的兩個根本差異：\textbf{動作集合開放}（下一段結構有無限多種）、\textbf{目標是分布而非最優解}（需保留多樣性）。
+
+\paragraph{定位。}與 Nam et al.~\cite{nam2024}「quality-driven」（系統決定什麼是好關卡）不同，本研究是「intent-driven」：設計者以 STRUCT / PATH 指定意圖，其中 PATH 已編碼空間化的 action semantics；搜尋確保這些語義在生成的 STRUCTURE 中仍可被實現。與 novelty search 的差異是「design-meaningful diversity」（不同的可行設計）而非「surface-level variation」。本文將 PATH 視為\emph{明確的 game-playing / traversal semantics}，但不主張這組 action tokens 已足以完整描述人類玩家的偏好、技巧、猶豫、探索或次佳決策；完整 player-behavior modeling 留待後續工作。
+
+%=====================================================================
+\section{方法}
+
+\subsection{Problem Formulation}
+
+We formulate conditional level generation as a sequential decision-making problem with a \emph{sampled-action Markov decision process (MDP)}. Unlike conventional MDPs where the action set is fixed and state-independent, our formulation allows the action set to be dynamically proposed by a generative language model at each decision step, reflecting the open-ended nature of structural level design.
+
+\begin{table}[t]
+\centering
+\caption{Comparison between standard MDP and our sampled-action MDP formulation.}
+\label{tab:mdp_comparison}
+\begin{tabular}{p{2.2cm} p{4.5cm} p{6.8cm}}
+\toprule
+\textbf{Component} & \textbf{Standard MDP} \((\mathcal{S}, \mathcal{A}, P, R)\) & \textbf{Sampled-Action MDP (Ours)} \\
+\midrule
+State space \(S\) & \(s_t \in \mathcal{S}\), typically a fixed representation & \(s_t = (\ell_{1:t}, c)\): level prefix plus design intent, where \textsc{Path} is a spatially grounded action-token sequence \\
+\addlinespace
+Action space \(\mathcal{A}\) & Fixed, finite, state-independent set & \emph{State-dependent}: \(\mathcal{A}(s_t) = \{a_i\}_{i=1}^K\), sampled on the fly from \(\mathcal{G}\) via SBS~\cite{kool2019}; each action is a variable-length structural segment \\
+\addlinespace
+Action prior & Not applicable; actions have no inherent probability & Each candidate \(a_i\) carries \(\log \pi_\theta(a_i \mid s_t)\), the LLM's prior log-probability \\
+\addlinespace
+Transition \(P\) & \(P(s_{t+1} \mid s_t, a_t)\), often stochastic & \emph{Deterministic}: \(s_{t+1} = \ell_{1:t} \oplus a_t\) (concatenation) \\
+\addlinespace
+Reward \(R\) & \(R(s_t, a_t, s_{t+1})\), typically per-step & \emph{Terminal only}: feasibility requires both ordinary solvability and executable PATH semantics; soft terms measure STRUCT/PATH adherence \\
+\addlinespace
+Policy & \(\pi(a \mid s)\) defined over fixed action set & \(\pi_\theta(a \mid s)\) defined by LLM; search constructs improved distribution \(\pi'\) over \(\mathcal{A}(s_t)\) \\
+\addlinespace
+Decision rule & Typically \(\arg\max\) (greedy) or PUCT & \emph{Sampling from} \(\pi'\), preserving diversity; not seeking a single optimal action \\
+\addlinespace
+Objective & Find optimal policy \(\pi^*\) maximizing expected cumulative reward & Improve the \emph{distribution} \(\pi_\theta\) via expert iteration; diversity is a first-class objective \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\paragraph{State Space.}
+A state \( s_t = (\ell_{1:t}, c) \) consists of:
+\begin{itemize}
+    \item \(\ell_{1:t} = (\ell_1, \ell_2, \ldots, \ell_t)\): the prefix of the level generated so far, represented as a sequence of tokens or structural chunks;
+    \item \(c=(c_S,P)\): the design intent condition, consisting of a structural condition \(c_S\) (\textsc{Struct}) and a semantic path \(P\) (\textsc{Path}) specified by the designer.
+\end{itemize}
+The structural condition \(c_S\) is encoded via cross-attention, while the path \(P\) is injected in-sequence as forced action tokens that replace blank (\texttt{-}) tiles at their designated map positions; both remain fixed throughout the generation process.
+
+\paragraph{PATH Semantics.}
+The PATH input is not merely a geometric polyline. We represent it as an ordered, spatially grounded action-semantic sequence
+\begin{equation}
+    P=(p_1,p_2,\ldots,p_m), \qquad p_j=(r_j,u_j),
+    \label{eq:path_semantics}
+\end{equation}
+where \(r_j\) denotes a geometric region on the level and \(u_j\) is a game-playing action token such as \texttt{MOVE}, \texttt{JUMP}, \texttt{HIGH\_JUMP}, \texttt{FALL}, or \texttt{LAND}. Because the LLM's structural realization may shift geometry by a few tiles (column alignment, platform height), \(r_j\) is a \emph{tolerant} region: a chunk-aligned box or a point with slack \(\pm\delta\) tiles, so that a token counts as realized if the trajectory performs \(u_j\) anywhere inside \(r_j\). The tolerance \(\delta\) is a verifier hyperparameter whose sensitivity is reported in the experiments. The dual-expert model already conditions generation on this semantic sequence. The new problem addressed here is whether the generated structural realization actually \emph{affords and executes} these action tokens in the specified order and regions.
+
+\paragraph{Action Space and Proposal Mechanism.}
+At each state \(s_t\), the action set is not predefined but rather \emph{sampled on the fly} from a dual-expert MarioGPT policy \(\mathcal{G}\). Specifically, we draw \(K\) candidate next-segment actions via Stochastic Beam Search (SBS)~\cite{kool2019}, which performs Gumbel-top-\(k\) sampling without replacement at the sequence level:
+\begin{equation}
+    \{(a_i, \log \pi_\theta(a_i \mid s_t))\}_{i=1}^K \leftarrow \mathrm{SBS}(\mathcal{G}, s_t, K),
+    \label{eq:action_proposal}
+\end{equation}
+where each \(a_i\) is a variable-length token sequence representing a structural segment, and \(\log \pi_\theta(a_i \mid s_t)\) is the standard autoregressive sequence log-probability assigned by the Structure Expert, summed over the non-forced (free) token positions of the segment; PATH tokens occupy their designated positions via forced decoding and do not contribute to \(\log \pi_\theta\). The SBS procedure ensures that the \(K\) candidates are diverse and cover a range of structural realizations under the fixed path by performing Gumbel-top-\(k\) sampling without replacement at the sequence level (shifted Gumbel~\cite{kool2019}), applied to the free-position logits of the Structure Expert.
+
+Thus, the local action set at state \(s_t\) is defined as:
+\begin{equation}
+    \mathcal{A}(s_t) \coloneqq \{a_i\}_{i=1}^K,
+    \label{eq:local_action_set}
+\end{equation}
+which is a subset of the infinitely large space of all possible continuations. This sampled-action view is essential because enumerating all possible structural segments is intractable, yet we need a finite set for planning.
+
+\paragraph{Transition Dynamics.}
+The transition is deterministic. Upon selecting an action \(a \in \mathcal{A}(s_t)\), the new state is obtained by concatenation:
+\begin{equation}
+    s_{t+1} = (\ell_{1:t} \oplus a,\; c).
+    \label{eq:transition}
+\end{equation}
+The process terminates when the level reaches a predefined target length or when an end-of-sequence token is appended.
+
+\paragraph{Reward Structure.}
+In contrast to typical MDPs that provide per-step rewards, our reward is \emph{terminal only}. We distinguish ordinary level solvability from executable PATH semantics. Let
+\begin{equation}
+\mathrm{Exec}_{P}(L,P)
+=\mathbb{1}\!\left[\exists\,\tau\in\mathcal{T}(L):\tau\models P\right],
+\label{eq:path_exec}
+\end{equation}
+where \(\mathcal{T}(L)\) is the set of player trajectories that obey the encoded Mario movement and collision rules, and \(\tau\models P\) means that the trajectory realizes the ordered action tokens at their required geometric regions. Note that \(\mathrm{Exec}_{P}\) already requires a start-to-goal trajectory, so it implies solvability; we keep \(\mathrm{Solvable}(L)\) as a separately reported quantity for comparison with playability-only baselines. Define the hard feasibility gate
+\begin{equation}
+F(L,P)=\mathrm{Exec}_{P}(L,P).
+\label{eq:joint_feasibility}
+\end{equation}
+The progress automaton (Sec.~\ref{sec:semantic_grounding}) also yields a graded quantity: the largest prefix of \(P\) that some physics-valid trajectory can realize,
+\begin{equation}
+\mathrm{Prog}(L,P)=\frac{1}{m}\max\bigl\{j:\ \exists\,\tau\in\mathcal{T}(L)\ \text{realizing }p_1,\ldots,p_j\bigr\},
+\qquad \mathrm{Exec}_{P}(L,P)=\mathbb{1}[\mathrm{Prog}(L,P)=1].
+\label{eq:path_progress}
+\end{equation}
+We take \(\mathrm{Adh}_{\mathrm{PATH}}\coloneqq\mathrm{Prog}(L,P)\): PATH adherence is thus the fraction of action tokens actually executed in order, a concrete quantity rather than an abstract agreement score. The terminal reward is \emph{additive}, not gated:
+\begin{equation}
+    r_T = F(L,P) + \lambda_s \cdot \mathrm{Adh}_{\mathrm{STRUCT}} + \lambda_p \cdot \mathrm{Prog}(L,P),
+    \label{eq:terminal_reward}
+\end{equation}
+where \(\mathrm{Adh}_{\mathrm{STRUCT}}\) measures structural adherence. A multiplicative gate \(F\cdot(\cdot)\) would assign identical zero reward to a level that misses one token and to one that ignores the intent entirely, leaving the value head and the completed-Q estimates without a gradient among infeasible candidates; the additive form keeps \(F\) as the hard criterion for \emph{accepting} a level while preserving a signal for \emph{learning}. \(\mathrm{Prog}\) and \(\mathrm{Exec}_{P}\) are not redundant with solvability: a level may remain globally solvable while violating the requested PATH semantics, for example when a requested \texttt{HIGH\_JUMP} is blocked by an overhead tile but an alternative lower route still reaches the goal. No intermediate rewards are provided by the environment, making the problem sparse-reward; lookahead planning and the exact prefix check below compensate.
+
+\paragraph{Policy and Improvement Objective.}
+The generative model defines a prior policy \(\pi_\theta(\cdot \mid s_t)\) over all possible continuations. However, since we only have access to the \(K\) sampled actions, we construct an \emph{improved policy} \(\pi'\) over the local action set via search:
+\begin{equation}
+    \pi'(a \mid s_t) \propto \exp\!\bigl( \log \pi_\theta(a \mid s_t) + \sigma(\hat{q}(a)) \bigr),
+    \label{eq:improved_policy}
+\end{equation}
+where \(\hat{q}(a)\) is an estimated completion value (see Sec.~\ref{sec:completion_value}) and \(\sigma\) is a scaling function. Crucially, the final decision is made by \emph{sampling} from \(\pi'\) rather than taking the argmax, preserving the distributional nature required for diverse level generation. This stands in contrast to traditional planning methods that seek a single optimal action.
+
+\paragraph{Key Extensions over Standard MDP.}
+Compared to the classical MDP tuple \((\mathcal{S}, \mathcal{A}, P, R)\), our formulation introduces three key extensions:
+\begin{enumerate}
+    \item \textbf{State-dependent action sets:} \(\mathcal{A}\) is replaced by \(\mathcal{A}(s_t)\), which is sampled from the policy itself rather than being fixed a priori.
+    \item \textbf{Prior-aware improvement:} Each candidate action carries a prior log-probability \(\log \pi_\theta(a \mid s_t)\), which is combined with search-derived values to form an improved distribution.
+    \item \textbf{Distributional objective:} The goal is not to find a single optimal action but to obtain an improved \emph{distribution} \(\pi'\) that can be sampled from, ensuring expressiveness and diversity.
+\end{enumerate}
+These extensions are necessary because level generation operates in an open action space where structural meaningfulness and designer intent must be balanced, and where diversity is a first-class objective rather than an afterthought.
+
+\paragraph{Objective.}
+Our overall objective is to iteratively improve the LLM policy \(\pi_\theta\) by distilling the search-enhanced distribution \(\pi'\) back into the model:
+\begin{equation}
+    \mathcal{L} = \mathbb{E}_{s \sim \rho}\bigl[ \mathrm{KL}(\pi'(\cdot \mid s) \,\|\, \pi_\theta(\cdot \mid s)) \bigr] + \eta \cdot \mathrm{KL}(\pi_\theta \,\|\, \pi_{\mathrm{ref}}) + \mathcal{L}_{\mathrm{value}},
+    \label{eq:distillation_loss}
+\end{equation}
+where \(\rho\) is the state distribution induced by the search policy, \(\pi_{\mathrm{ref}}\) is the frozen original model acting as a regularizer, and \(\mathcal{L}_{\mathrm{value}}\) supervises the completion-value head. This expert-iteration loop is the core mechanism through which planning improves the generative model itself.
+
+
+\subsection{STRUCTURE--PATH Semantic Grounding and Executable Verification}
+\label{sec:semantic_grounding}
+The dual-expert LLM provides two complementary forms of design knowledge: STRUCTURE constrains what is placed in the map, while PATH specifies \emph{where and how} the intended traversal should occur through spatially grounded action tokens. Their joint validity therefore cannot be reduced to two independent adherence scores. We introduce an executable compatibility relation
+\begin{equation}
+    \mathrm{Compat}(L,P)=\mathrm{Exec}_{P}(L,P),
+\end{equation}
+which asks whether the generated structure truly affords the intended PATH semantics.
+
+The verifier is implemented as a physics-aware \(A^*\) search over player states rather than a tile-grid shortest path. A player state may include position, velocity, grounded status, and other variables required by the encoded Mario movement model. The PATH sequence is compiled into an ordered progress automaton; the search state is augmented with a progress index \(j\), and the index advances only when the trajectory realizes action token \(u_j\) in region \(r_j\). Thus the same search infrastructure supports two distinct queries:
+\begin{align}
+    \mathrm{Solvable}(L) &:\quad \exists\text{ any physics-valid trajectory from start to goal},\\
+    \mathrm{Exec}_{P}(L,P) &:\quad \exists\text{ a physics-valid trajectory from start to goal that also satisfies }P.
+\end{align}
+For example, a level containing a legal ceiling block may still be structurally valid, but if that block intersects the required \texttt{HIGH\_JUMP} arc then \(\mathrm{Exec}_{P}=0\), even when another route keeps \(\mathrm{Solvable}(L)=1\).
+
+\paragraph{Exact prefix verification at internal nodes.}
+The verifier is not confined to terminal levels. For a partial level \(\ell_{1:t}\), every PATH token whose region \(r_j\) lies inside the generated span is already decidable: we run the same player-state \(A^*\) up to the current generation frontier and obtain
+\begin{equation}
+\mathrm{Prog}_{\mathrm{pre}}(\ell_{1:t},P)=\frac{1}{m}\max\bigl\{j:\ r_j\subseteq\mathrm{span}(\ell_{1:t}),\ \exists\,\tau\ \text{realizing }p_1,\ldots,p_j\bigr\},
+\qquad
+\mathrm{Dead}(\ell_{1:t},P)=\mathbb{1}\bigl[\exists\,j:\ r_j\subseteq\mathrm{span}(\ell_{1:t}),\ \text{no trajectory realizes }p_{1..j}\bigr].
+\label{eq:prefix_verify}
+\end{equation}
+\(\mathrm{Dead}=1\) is an exact, rule-derived certificate that the prefix can no longer realize \(P\); such a candidate is removed from \(\mathcal{A}(s_t)\) (hard prune) before any learned estimate is consulted. The learned completability value (Sec.~\ref{sec:completion_value}) is therefore responsible only for the \emph{future} tokens, those whose regions have not yet been generated. This exact-prefix / learned-future division makes the search auditable: every pruning decision inside the tree can be traced either to a verifier certificate or to a value estimate, and the two are reported separately. The prefix check is cheaper than the terminal one since the search stops at the generation frontier and results are memoized along the tree path.
+
+This verifier provides a hard guarantee only with respect to the game rules and semantic predicates explicitly encoded in the player-state model; it is not a claim that PATH tokens fully model human behavior. In this paper, PATH semantics represent designer-specified traversal/game-playing features. Richer human behavior---skill, hesitation, exploration, risk preference, or suboptimal action choice---is outside the scope of the first paper.
+
+\subsection{Sampled-action MDP}
+狀態 $s_t=(\lv_{1:t},\cond)$：已拼接的關卡前綴與條件圖。動作 $a_t$：下一段結構（token 序列）。動力學確定：$\lv_{1:t+1}=\lv_{1:t}\oplus a_t$。動作集合由雙專家 MarioGPT $\Gp$ 在每個節點抽 $K$ 個候選構成：
+\begin{equation}
+\{(a_i,\log\pi_\theta(a_i\mid s_t))\}_{i=1}^K \leftarrow \mathrm{SBS}(\Gp, s_t, K),
+\end{equation}
+其中 SBS 為 Stochastic Beam Search~\cite{kool2019}——序列層級的 Gumbel-Top-$k$ 不放回抽樣，保留標準自回歸 log-prob（僅累積未被 forced 的自由位置；path token 以 forced decoding 固定，不計入 $\log\pi_\theta$）。這是把 Sampled MuZero~\cite{hubert2021} 的「以 prior 樣本定義動作集合」用在生成模型上。序列層級的 shifted Gumbel 噪音使 $K$ 個候選在固定 path 下涵蓋不同的 structural realization，提供可解釋的多樣性軸。
+
+\subsection{Gumbel 搜尋與 Semantic Completability}
+\label{sec:completion_value}
+每節點以 Sequential Halving 在 $K$ 個候選上分配模擬預算 $n$（Gumbel MuZero~\cite{danihelka2022}）。葉節點以 \emph{semantic completability value} 評估：
+\begin{equation}
+v_\phi(s_t)=\Pr\Bigl[\exists\,L_{t:T}:\; L_{1:T}\text{ structurally valid}\;\land\;\mathrm{Solvable}(L_{1:T})\;\land\;\mathrm{Exec}_{P}(L_{1:T},P)=1\Bigr].
+\label{eq:semantic_completability}
+\end{equation}
+$v_\phi$ 接在凍結 $\Gp$ backbone 最後一層 hidden state 上（共用 cross-attention 條件記憶）。它預測的不是「目前片段看起來好不好」，而是\textbf{從目前 partial level 出發，是否仍存在能讓 STRUCTURE 與未來 PATH action semantics 聯合成立的完成}。由於 Eq.~\eqref{eq:prefix_verify} 已精確判定前綴內的 token，$v_\phi$ 只需估計尚未生成區域的 token 可實現性；輸入另附 $\mathrm{Prog}_{\mathrm{pre}}$ 與尚待實現的 token 序列 $p_{j+1..m}$。終端 reward 使用 Eq.~\eqref{eq:terminal_reward}，由 physics-aware $A^*$ 提供 $\mathrm{Prog}$ 與 $\mathrm{Exec}_P$ 的 ground truth。
+
+\paragraph{存在量詞的 value target。}$v_\phi$ 是存在性命題，AlphaZero 慣用的「該狀態實際完成的結果」作為 target 有單邊雜訊：一次失敗的完成不證明可行完成不存在。因此 target 定義為該前綴在本輪搜尋中\emph{所有已探索完成}的最大值——任一完成達到 $\mathrm{Exec}_P=1$ 即標為 1（max-backup 而非 mean-backup）；負標籤（無任何已探索完成可行）以較低權重納入，並隨搜尋預算增加而上調，因為預算越大負標籤越可信。$\mathrm{Dead}=1$ 的前綴則為確定的負樣本，權重為 1。
+
+每個候選 $\lv\oplus a$ 先經 Eq.~\eqref{eq:prefix_verify} 的 prefix verifier：$\mathrm{Dead}=1$ 者直接自 $\mathcal{A}(s_t)$ 移除。改良分布以 completed Q-values 計算：$\pi'(a)\propto\exp(\log\pi_\theta(a)+\sigma(\hat q(a)))$，未展開的候選以 $v_\phi$ 補值。下一段從 $\pi'$ \emph{抽樣}而非取 argmax，以保留分布性。搜尋的核心功能因此不只是提高通關率，而是\textbf{前瞻目前的 structural decision 是否會破壞未來 PATH semantics 的可實現性}。局部上合法的片段仍可能在數個 chunk 後造成必要 landing region、jump clearance 或 action ordering 無法滿足，這正是自回歸生成缺乏回頭能力時最難處理的錯誤。
+
+\paragraph{為什麼是 Gumbel。}每次展開是一次 LLM 呼叫，模擬預算註定小（$n\in[8,32]$）。Gumbel MuZero 的核心保證正是低預算下 $\pi'$ 在期望上不劣於 $\pi_\theta$。PUCT 在此預算下無此保證。此 policy-improvement 性質是相對於\emph{已抽樣的候選集合與 value/Q 估計假設}，並不等同於對所有可能 continuation 的全域最優保證；輸出關卡的 hard semantic guarantee 來自終端 executable verifier。
+
+\subsection{Completed-Q 蒸餾：search-improved LLM}
+搜尋後的 $\pi'$ 蒸餾回 $\Gp$：
+\begin{equation}
+\mathcal{L}=\mathbb{E}_{s}\bigl[\mathrm{KL}(\pi'(\cdot\mid s)\,\|\,\pi_\theta(\cdot\mid s))\bigr]+\eta\,\mathrm{KL}(\pi_\theta\,\|\,\pi_{\text{ref}})+\mathcal{L}_{\text{value}}.
+\end{equation}
+雙專家 backbone \textbf{凍結}，僅在 Structure Expert（即提案結構段的 policy）上更新附加的 LoRA adapter；Path Expert 全程凍結。$\pi_{\text{ref}}$ 為凍結的原模型，KL 項防止蒸餾後分布塌縮與條件遵從退化。由於搜尋 target 已納入 STRUCTURE--PATH executable consistency，蒸餾的目標不只提高一般 playability，也要降低「STRUCT 合法但 PATH action semantics 無法執行」的 incompatibility。主張：蒸餾後的 $\Gp$ 在\emph{不搜尋}時仍優於原模型、semantic executability 提升且多樣性未崩——這是 AlphaZero 式結果在 PCG 上的首次展示。
+
+\subsection{理論命題（規劃中）}
+\begin{proposition}[非正式]
+設動作集合由 SBS 自 $\pi_\theta$ 不放回抽出 $K$ 條序列，並以 Sequential Halving 與 completed-Q 建構 $\pi'$。則在 Gumbel MuZero 的假設下（$\hat q$ 為無偏估計），$\mathbb{E}_{a\sim\pi'}[q(a)]\ge\mathbb{E}_{a\sim\pi_\theta}[q(a)]$ 對序列層級動作仍成立。
+\end{proposition}
+Gumbel MuZero 的證明針對有限離散動作集合；SBS 提供的正是「從 $\pi_\theta$ 的 Gumbel-Top-$k$ 不放回樣本」，故可沿用其論證。此處候選的 $\log\pi_\theta$ 為 Structure Expert 的標準自回歸序列 log-prob（僅在自由位置累積；path-token 由 forced decoding 固定，不計入）。此處的 $q$ 以 semantic-feasibility-aware return 定義。若證出，是獨立於 Mario 的方法貢獻；期刊版本可含此附錄，若未完成則以實驗支持。需明確區分：此命題是 sampled candidate set 上的 policy-improvement 命題，而「接受的關卡符合已編碼 PATH semantics」則由 executable verifier 保證。
+
+\subsection{方法圖}
+\begin{figure}[H]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\small,
+  box/.style={draw, rounded corners=1pt, align=center, inner sep=4pt, minimum height=9mm, text width=34mm},
+  cool/.style={box, fill=blue!8, draw=blue!50!black},
+  note/.style={box, fill=yellow!15, draw=orange!70!black},
+  arr/.style={-{Latex[length=2mm]}, thick},
+  dsh/.style={-{Latex[length=2mm]}, thick, dashed, violet!70!black},
+  red/.style={-{Latex[length=2mm]}, thick, dashed, red!70!black},
+  nd/.style={circle, draw, inner sep=0pt, minimum size=3mm},
+  ndv/.style={nd, fill=blue!50!black}
+]
+\node[box] (state) at (0,0) {狀態 $s_t=(\lv_{1:t},\cond)$\\ 顯式前綴 + STRUCT / PATH semantics};
+\node[cool] (prior) at (4.6,0) {雙專家 $\Gp$ 先驗 $\pi_\theta$\\ SBS 不放回抽 $K$ 個\\ 保留 $\log\pi_\theta$（標準自回歸）};
+\node[draw, minimum width=60mm, minimum height=54mm] (tree) at (10.4,-1.2) {};
+\node[anchor=north, font=\small\bfseries] at (tree.north) {Sequential Halving over $K$ 候選};
+\coordinate (r) at ($(tree.north)+(0,-1.1)$);
+\node[nd] (rn) at (r) {};
+\node[nd] (c1) at ($(r)+(-1.6,-1.0)$) {};
+\node[nd] (c2) at ($(r)+(0,-1.0)$) {};
+\node[nd] (c3) at ($(r)+(1.6,-1.0)$) {};
+\node[ndv] (d1) at ($(c1)+(-0.6,-1.0)$) {};
+\node[nd]  (d2) at ($(c1)+(0.6,-1.0)$) {};
+\node[nd]  (d3) at ($(c3)+(-0.6,-1.0)$) {};
+\node[ndv] (d4) at ($(c3)+(0.6,-1.0)$) {};
+\draw (rn)--(c1) (rn)--(c2) (rn)--(c3) (c1)--(d1) (c1)--(d2) (c3)--(d3) (c3)--(d4);
+\node[font=\scriptsize, anchor=east] at ($(rn)!0.5!(c1)+(-0.1,0.1)$) {$\lv\oplus a_1$};
+\node[font=\scriptsize, anchor=west] at ($(rn)!0.5!(c3)+(0.1,0.1)$) {$\lv\oplus a_K$};
+\node[anchor=south, font=\scriptsize, align=center, text width=56mm] at ($(tree.south)+(0,0.1)$) {邊：確定性 append + prefix verifier（$\mathrm{Dead}\Rightarrow$ 剪枝）\\ 葉：$v_\phi$ 估計未來 token；前綴 token 精確判定\\ 終端：$A^*$ 給 $\mathrm{Prog}$ / $\mathrm{Exec}_{P}$ + adherence\\ 深層：$\Gp$ 在 $\lv\oplus a$ 上再提案；預算 $n$ 小};
+\node[box] (next) at (16.4,0) {改良分布 $\pi'\propto\exp(\log\pi_\theta+\sigma(\hat q))$\\ 從 $\pi'$ 抽樣 $a_t$（非 argmax）\\ $s_{t+1}=s_t\oplus a_t$};
+\node[note] (distill) at (10.4,-6.6) {Completed-Q 蒸餾：$\pi_\theta\leftarrow\pi'$\\ 凍結 expert，只更新 LoRA\\ KL to $\pi_{\text{ref}}$；$v_\phi\leftarrow$ semantic terminal result};
+\draw[arr] (state)--(prior);
+\draw[arr] (prior.east)--(tree.west|-prior.east);
+\draw[arr] (tree.east|-next.west)--(next.west);
+\draw[arr] (next.north) |- ++(-2,1.0) -| (state.north) node[pos=0.25, above, font=\scriptsize] {未達長度 $T$：$s_{t+1}$ 回到起點};
+\draw[dsh] (tree.south) -- (distill.north) node[midway, right, font=\scriptsize, violet!70!black] {$\pi'$、終端 reward};
+\draw[dsh] (distill.west) -| (prior.south) node[pos=0.9, left, font=\scriptsize, violet!70!black] {更新先驗};
+\end{tikzpicture}}
+\caption{每一步由雙專家 MarioGPT 以 SBS 提案 $K$ 個候選，Sequential Halving 以 semantic completability value 評估葉節點；終端由 physics-aware $A^*$ 分別驗證一般通關與 PATH action semantics 的可執行性，再結合 STRUCT/PATH adherence。從 completed-Q 改良分布抽樣下一段。虛線為 AlphaZero 式外圈：$\pi'$ 蒸餾回 Structure Expert 的 LoRA。}
+\end{figure}
+
+%=====================================================================
+\section{貢獻}
+\begin{enumerate}
+\item \textbf{STRUCTURE--PATH semantic grounding}：PATH 已是「幾何位置 + action tokens」的 traversal semantics；本篇進一步把它與生成 STRUCTURE 建立 executable relation，區分「STRUCT 合法」「PATH adherence」與「STRUCTURE 是否真的實現 PATH semantics」。
+\item \textbf{開放動作集合的 Gumbel 搜尋}：SBS（序列層級 Gumbel-Top-$k$）$\times$ Sequential Halving $\times$ completed-Q，在動態 LLM proposal action set 上前瞻 structural decisions 對未來 PATH semantics 可實現性的影響。
+\item \textbf{Exact-prefix / learned-future completability}：前綴內的 PATH token 由 player-state $A^*$ 精確判定（$\mathrm{Dead}$ 證書即硬剪枝），尚未生成區域的 token 由接在凍結 backbone 上的 semantic completability value 估計；存在性 value 採 max-backup target。取代昂貴 rollout，並使每個剪枝決定可追溯到證書或估計。
+\item \textbf{Search-improved level LLM}：completed-Q 蒸餾回附加於 Structure Expert 的 LoRA adapter，使 executable structure--path consistency 由 search-time improvement 進一步內化到生成模型；蒸餾後模型不搜尋仍應優於原模型且多樣性未崩。
+\item \textbf{Distribution, not argmax}：從 $\pi'$ 抽樣並以 expressive range 驗證，把「目標是改善可行設計的分布」納入方法，而非只產生單一最佳關卡。$A^*$ 衍生的 branching、structural difficulty、optimal-play complexity 則保留為 behavioral evaluation，而非主要演算法貢獻。
+\end{enumerate}
+
+%=====================================================================
+\section{實作：雙專家 MarioGPT + LightZero}
+LightZero~\cite{lightzero} 無 Gumbel AlphaZero，故取其 Gumbel MuZero 的搜尋（Gumbel-Top-$k$、Sequential Halving、completed-Q、reanalyse），把 $g$ 換成真實 append + 重新編碼。兩個衝突與解法：(1) 固定動作空間 $\to$ 節點局部動作表（索引 $0..K{-}1$ 對應該節點的 $K$ 個候選，SBS 的 $\log\pi_\theta$ 作為 policy logits）；(2) 批次張量推論 vs 自回歸解碼 $\to$ 第一階段 Python 樹，SBS 改多葉節點批次解碼。
+\begin{enumerate}[label=\textbf{S\arabic*.}]
+\item 凍結雙專家 $\Gp$，實作 \texttt{propose}$(s,K)$：SBS 以序列層級 shifted Gumbel 不放回抽樣，$\log\pi_\theta$ 為 Structure Expert 的標準自回歸序列 log-prob（僅累積自由位置；path token 為 forced，不計入）；單元測試候選不重複、log-prob 與 teacher-forcing 一致。
+\item 明確化 PATH semantic interface：將每個 PATH token 表示為 $(r_j,u_j)$，其中 $r_j$ 為幾何 region、$u_j$ 為 action token；建立 token-to-predicate 對應與 ordered progress automaton。
+\item 實作 physics-aware $A^*$ verifier：player state 含 movement / collision 所需變數，搜尋節點擴充 PATH progress index；輸出 $\mathrm{Solvable}(L)$、$\mathrm{Prog}(L,P)$、$\mathrm{Exec}_{P}(L,P)$，並支援停在生成邊界的 prefix 模式輸出 $\mathrm{Prog}_{\mathrm{pre}}$ 與 $\mathrm{Dead}$（沿樹路徑 memoize）。region 容差 $\delta$ 為參數。建立 semantic unit tests，例如 \texttt{HIGH\_JUMP} 上方被 block 阻擋、gap 超過可跳距離、landing 被占據、required FALL/JUMP 次序不可能、以及「前綴 Dead 但整體仍 Solvable」的案例。
+\item \texttt{LevelGenEnv}：observation $=(\lv,\cond)$，\texttt{step}$(i)$ append 局部表第 $i$ 個切片，達目標長度或結束符終止；終端 reward 使用 Eq.~\eqref{eq:terminal_reward}（加法，$\mathrm{Adh}_{\mathrm{PATH}}=\mathrm{Prog}$）；\texttt{step} 對候選先呼叫 prefix verifier，$\mathrm{Dead}$ 者自局部動作表移除。
+\item Value head $v_\phi$ 接在 backbone 上，輸入含 $\mathrm{Prog}_{\mathrm{pre}}$ 與待實現 token；以 max-backup 的存在性 target 監督（$\mathrm{Dead}$ 前綴為確定負樣本），初期使用短關卡（$T\le8$）curriculum。
+\item 小規模跑通：$K=4$、$n=8$、Python 樹；確認 completed-Q 能避開典型 STRUCTURE--PATH incompatibility，並驗證蒸餾在 LoRA 上有效且 adherence / diversity 不退化。
+\item 迴圈：搜尋生成 $\to$ $A^*$ solvability + PATH executability + adherence 結算 $\to$ replay $\to$ 更新 $v_\phi$ 與 Structure Expert 的 LoRA（KL to reference）$\to$ reanalyse；蒸餾 0/1/3/5 輪。
+\item 擴大：$K\in\{4,8,16\}$、$n\in\{8,16,32\}$、$T$ 全長；效能瓶頸確認後決定是否改 C++ 樹。
+\end{enumerate}
+
+%=====================================================================
+\section{實驗設計（期刊等級）}
+\begin{table}[H]
+\centering\small
+\caption{實驗設計}\label{tab:exp}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{2.3cm}XX}
+\toprule
+項目 & 設定 & 回答的問題 \\
+\midrule
+基線 & (a) $\Gp$ 純採樣；(b) $\Gp$ + rejection sampling（同 LLM 呼叫數）；(c) MCTS + 隨機 rollout（MCMCTS 風格，無 $v_\phi$）；(d) $\Gp$ + novelty search（MarioGPT 原版）；(e) PUCT + i.i.d. 抽樣（非 Gumbel）；(f) PCGRL 風格 RL 生成器（固定動作空間） & 搜尋增益是否超過同算力重抽；learned value 是否勝過 rollout；Gumbel 是否勝過 PUCT；開放動作空間是否勝過固定 \\
+指標 & playability（$A^*$ 通關率）；PATH semantic executability（$\mathrm{Exec}_{P}$）；STRUCTURE--PATH incompatibility rate；STRUCT / PATH adherence；per-token semantic satisfaction；expressive range 與 pairwise diversity；每張可用關卡的 LLM 呼叫數與 wall-clock；search-derived behavioral 指標（branching、structural difficulty、optimal-play complexity） & 品質、可控性、joint semantic consistency、多樣性、成本、設計意義 \\
+主結果 1 & 有搜尋 vs 無搜尋，各基線同算力；同報 solvability 與 $\mathrm{Exec}_{P}$ & 搜尋是否不只提高通關率，也提高 STRUCTURE 對 PATH action semantics 的未來可實現性 \\
+主結果 2 & 蒸餾 0/1/3/5 輪後的 $\Gp$，「無搜尋」評估；同時報告 $\mathrm{Exec}_{P}$、incompatibility、adherence 與 expressive range & search-discovered semantic consistency 是否被內化到 LLM，且模型未變保守 \\
+消融 & $K$；預算 $n$；有無 $v_\phi$；有無 prefix verifier 剪枝（純 $v_\phi$ vs exact-prefix + $v_\phi$）；乘法 gate vs 加法 reward；max-backup vs mean-backup value target；solvability-only verifier vs +PATH semantic verifier；semantic PATH vs geometry-only PATH；completed-Q vs visit-count 蒸餾；$\pi'$ 抽樣 vs argmax；序列層級 Gumbel-Top-$k$ 不放回 vs i.i.d. 抽樣（多樣性來源）；動作粒度 column / chunk / semantic；蒸餾範圍（全參數 / LoRA）；KL 係數 $\eta$ & 驗證 semantic grounding 是否必要；各元件必要性；低預算下 Gumbel 的優勢來源；粒度取捨；條件遵從保持 \\
+可解釋性 & 搜尋樹分支依結構/路徑主導性標色；追蹤 PATH token progress；分析「STRUCT 合法但 PATH semantics 不可執行」的回頭點，例如 blocked high jump / impossible landing；每個剪枝決定標記為「verifier 證書」或「$v_\phi$ 估計」 & 搜尋在哪裡修復 STRUCTURE--PATH semantic incompatibility；修復有多少來自精確證書、多少來自學習估計 \\
+一般性 & 換條件類型（僅 STRUCT / 僅 semantic PATH / STRUCT+PATH；部分 PATH token 指定、其餘設為 wildcard），並比較不同 action-token vocabulary 的可驗證性 & intent-driven semantic framework 的延展性，而不把未指定維度改成系統自動決定的 quality objective \\
+Semantic stress tests & 系統化注入 blocked high jump、insufficient jump distance、blocked landing、錯誤 FALL/JUMP ordering、局部可行但後續 token 不可完成等案例；region 容差 $\delta\in\{0,1,2,4\}$ tiles 的敏感度 & verifier 是否能抓 local executable error；prefix 剪枝抓到多少比例的 delayed failure、剩餘由 Gumbel lookahead 處理多少；$\delta$ 對 $\mathrm{Exec}_P$ 與多樣性的影響 \\
+人類評估 & 10–20 位受試者對「蒸餾前 / 蒸餾後 / 搜尋」關卡的可玩性、指定 traversal/action intent 辨識與自然度評分 & executable PATH semantics 的客觀指標是否與玩家感知一致；不宣稱完整 human-behavior model \\
+統計 & 每設定 5 seeds；報告均值與 95\% CI；配對檢定 & 期刊審稿要求 \\
+風險 & value 初期訊號稀疏 $\to$ 短關卡 curriculum；蒸餾使 LLM 保守 $\to$ KL to reference + 同報 diversity；增益不超過 rejection sampling $\to$ 提高 $T$ 與條件難度以凸顯回頭價值 & — \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+%=====================================================================
+\section{與第二篇的關係}
+本篇動力學已知、reward 僅終端，是第二篇（Gumbel Stochastic Direct MuZero：玩家為環境、直接預測玩家行為、chance node、epistemic exploration）的必要前置：搜尋骨架、先驗、蒸餾、semantic completability 與 executable PATH verification 全部由本篇提供並經驗證。第一篇的 PATH semantics 是\textbf{設計者指定的 traversal/action intent}，由已知遊戲規則驗證；第二篇才進一步把「玩家實際會怎麼玩」視為隨機環境並建模 human/agent behavior distribution。第二篇主要替換葉節點與 reward 的來源。本篇的關卡庫、semantic verifier 標籤與 value head 亦可作為第二篇世界模型的暖啟動資料。
+
+%=====================================================================
+\section{相關工作定位}
+搜尋式 PCG：Summerville et al.~\cite{summerville2015}；RL 式 PCG：PCGRL~\cite{khalifa2020}、Nam et al.~\cite{nam2024}、EDRL~\cite{shu2021}；LLM 關卡生成：MarioGPT~\cite{sudhakaran2023}；expert iteration：ExIt~\cite{anthony2017}、AlphaZero~\cite{silver2018}；大動作空間規劃：Sampled MuZero~\cite{hubert2021}、Gumbel MuZero~\cite{danihelka2022}、SBS~\cite{kool2019}；LLM + 樹搜尋：TS-LLM~\cite{feng2023}。本篇要形成的交集是：\textbf{條件式關卡 LLM $\times$ spatial action-semantic PATH $\times$ executable STRUCTURE--PATH grounding $\times$ Gumbel sampled-action 搜尋 $\times$ 蒸餾回 LLM}。其中 A* / player-state search 的角色不是發明 PATH semantics，而是把既有 PATH action tokens 落地成可執行的 behavioral constraint 與 terminal ground truth。
+
+%=====================================================================
+\begin{thebibliography}{99}\small
+\bibitem{sudhakaran2023} S. Sudhakaran et al., ``MarioGPT: Open-Ended Text2Level Generation through Large Language Models,'' NeurIPS 2023.
+\bibitem{summerville2015} A. Summerville, S. Philip, M. Mateas, ``MCMCTS PCG 4 SMB: Monte Carlo Tree Search to Guide Platformer Level Generation,'' AIIDE 2015.
+\bibitem{khalifa2020} A. Khalifa, P. Bontrager, S. Earle, J. Togelius, ``PCGRL: Procedural Content Generation via Reinforcement Learning,'' AIIDE 2020.
+\bibitem{nam2024} S. Nam, C.-H. Hsueh, P. Rerkjirattikal, K. Ikeda, ``Using Reinforcement Learning to Generate Levels of Super Mario Bros. with Quality and Diversity,'' \emph{IEEE Trans. Games}, 2024.
+\bibitem{shu2021} T. Shu, J. Liu, G. N. Yannakakis, ``Experience-Driven PCG via Reinforcement Learning: A Super Mario Bros Study,'' IEEE CoG 2021.
+\bibitem{anthony2017} T. Anthony, Z. Tian, D. Barber, ``Thinking Fast and Slow with Deep Learning and Tree Search,'' NeurIPS 2017.
+\bibitem{silver2018} D. Silver et al., ``A General Reinforcement Learning Algorithm that Masters Chess, Shogi, and Go through Self-Play,'' \emph{Science}, 2018.
+\bibitem{hubert2021} T. Hubert et al., ``Learning and Planning in Complex Action Spaces,'' ICML 2021.
+\bibitem{danihelka2022} I. Danihelka, A. Guez, J. Schrittwieser, D. Silver, ``Policy Improvement by Planning with Gumbel,'' ICLR 2022.
+\bibitem{kool2019} W. Kool, H. van Hoof, M. Welling, ``Stochastic Beams and Where to Find Them,'' ICML 2019.
+\bibitem{feng2023} X. Feng et al., ``AlphaZero-like Tree-Search can Guide Large Language Model Decoding and Training,'' 2023.
+\bibitem{lightzero} Y. Niu et al., ``LightZero: A Unified Benchmark for Monte Carlo Tree Search in General Sequential Decision Scenarios,'' NeurIPS 2023 Datasets and Benchmarks.
+\end{thebibliography}
+
+\end{document}

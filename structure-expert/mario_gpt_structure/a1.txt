@@ -1,0 +1,226 @@
+./utils.py:13:TILE_DIR = os.path.join(pt, "data", "tiles")
+./utils.py:82:        tiles_dir = TILE_DIR
+./utils.py:87:        "S": Image.open(f"{tiles_dir}/smb-breakable.png"),
+./utils.py:88:        "?": Image.open(f"{tiles_dir}/smb-question.png"),
+./utils.py:89:        "Q": Image.open(f"{tiles_dir}/smb-question.png"),
+./utils.py:92:        "<": Image.open(f"{tiles_dir}/smb-tube-top-left.png"),
+./utils.py:93:        ">": Image.open(f"{tiles_dir}/smb-tube-top-right.png"),
+./utils.py:94:        "[": Image.open(f"{tiles_dir}/smb-tube-lower-left.png"),
+./utils.py:95:        "]": Image.open(f"{tiles_dir}/smb-tube-lower-right.png"),
+./utils.py:116:        "W": Image.open(f"{tiles_dir}/W-J-END.png"),
+./utils.py:121:        "R": Image.open(f"{tiles_dir}/R-BIG.png"),
+./prompter.py:336:    This generates data-driven thresholds to replace the hardcoded STATISTICS for mapping counts to keywords like "no/little/some/many".
+        "N": Image.open(f"{tiles_dir}/N.png"),  # self-created
+        "B": Image.open(f"{tiles_dir}/cannon_top.png"),
+        "b": Image.open(f"{tiles_dir}/cannon_bottom.png"),
+        "F": Image.open(f"{tiles_dir}/flying_koopa.png"),
+        "@": Image.open(f"{tiles_dir}/smb-coin.png"),
+        "T": Image.open(f"{tiles_dir}/N.png"),
+        
+        # =========================================================
+        # ⭐️ [修改]：將不同的路徑 Token 對應到各自專屬的圖片
+        # =========================================================
+        "M": Image.open(f"{tiles_dir}/smb-movement.png"),
+        "J": Image.open(f"{tiles_dir}/smb-bigJump.png"),
+        "j": Image.open(f"{tiles_dir}/smb-smalljump.png"),
+        "A": Image.open(f"{tiles_dir}/smb-JumpandMove.png"),
+        "C": Image.open(f"{tiles_dir}/smb-getCoin.png"),
+        "w": Image.open(f"{tiles_dir}/w-j-end-2.png"),
+        "W": Image.open(f"{tiles_dir}/W-J-END.png"),
+        "k": Image.open(f"{tiles_dir}/k-j-in-air.png"),
+        "K": Image.open(f"{tiles_dir}/K-jump in air.png"),
+        "L": Image.open(f"{tiles_dir}/L.png"),
+        "r": Image.open(f"{tiles_dir}/r.png"),
+        "R": Image.open(f"{tiles_dir}/R-BIG.png"),
+        "U": Image.open(f"{tiles_dir}/U.png"),
+    }
+    
+    levels = [list(s) for s in level]
+    arr = np.array(levels)
+    return char_array_to_image(arr, chars2pngs, target_size), arr, level
+
+
+def generate_timelapse(level_tensor, mario_lm, interval: int = 1):
+    images = []
+    full_size = math.ceil(level_tensor.shape[-1] / 14)
+    for i in range(1, level_tensor.shape[-1], interval):
+        img = convert_level_to_png(
+            level_tensor[:i], mario_lm.tokenizer, target_size=(14, full_size)
+        )[0]
+        images.append(img)
+    return images
+
+
+def save_level(level: List[str], filename: str):
+    concatenated = "\n".join(level)
+    with open(filename, "w") as f:
+        f.write(concatenated)
+    return filename
+
+
+def load_level(filename: str) -> List[str]:
+    with open(filename, "r") as file:
+        level_string = file.read()
+    lines = level_string.split("\n")
+    lines = [line.strip() for line in lines]
+    return lines
+
+def chars_to_2d_level(flat_chars: str, height: int = 14) -> str:
+    """
+    Convert a flat character string of length (height × width)
+    into a 2D level string with each row on a new line.
+    
+    Args:
+        flat_chars (str): A flat string (e.g., 700 characters).
+        height (int): Number of rows (default = 14).
+    
+    Returns:
+        str: Multiline string representing the 2D level.
+    """
+    total_len = len(flat_chars)
+    assert total_len % height == 0, "Input length must be divisible by height."
+    width = total_len // height
+    level_rows = [
+        flat_chars[r * width:(r + 1) * width]
+        for r in range(height)
+    ]
+    return "\n".join(level_rows)
+
+cannon_bottom.png
+cannon_top.png
+flying_koopa.png
+ki-background.png
+ki-door.png
+ki-hazard.png
+ki-moving-platform.png
+ki-passable.png
+ki-path.png
+ki-unpassable.png
+k-j-in-air.png
+K-jump in air.png
+L.png
+mma_tiles.zip
+mm-CMM.png
+mm-DMM.png
+mm-HMM.png
+mm-LMM.png
+mm-MMM.png
+mm-TMM.png
+N.png
+plant.png
+R-BIG.png
+r.png
+smb-background.png
+smb-bigJump.png
+smb-breakable.png
+smb-coin.png
+smb_enemies_sheet.png
+smb-enemy.png
+smb-getCoin.png
+smb-JumpandMove.png
+smb-movement.png
+smb-path.png
+smb-question.png
+smb-smalljump.png
+smb-tube-lower-left.png
+smb-tube-lower-right.png
+smb-tube-top-left.png
+smb-tube-top-right.png
+smb-unpassable.png
+tile004 (1).png
+tile004 (2).png
+tile004.png
+U.png
+w-j-end-2.png
+W-J-END.png
+Y.png
+from __future__ import annotations
+
+import os, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from typing import List, Optional
+
+import torch
+from torch.utils.data import Dataset
+from transformers import AutoTokenizer, PreTrainedTokenizer
+
+from mario_gpt.level import FULL_LEVEL_STR_WITH_PATHS
+
+PATH_TOKENS = frozenset({
+    'M', 'J', 'j', 'A', 'C',   # 原始路徑TOKEN
+    'L',                         # 滯空的M
+    'K', 'W', 'U',               # 大寫J衍生：滯空/終點/A上方
+    'k', 'w',                    # 小寫j衍生：滯空/終點
+})
+PIPE_RIGHT  = frozenset({'>', ']'})  # orphaned at patch left edge  → replace with X
+PIPE_LEFT   = frozenset({'<', '['})  # orphaned at patch right edge → replace with X
+DEFAULT_MODEL = "distilgpt2"
+PATCH_WIDTH = 25   # prediction target width (columns)
+FUTURE_WIDTH = 10  # future context width appended after target path
+PATCH_STRIDE = 1   # sliding window stride
+
+
+def _encode_char(tokenizer, ch: str) -> int:
+    return tokenizer.encode(ch, add_special_tokens=False)[0]
+
+
+class MarioDataset(Dataset):
+    """
+    Patch-based dataset: pure-path prompt + full-structure target.
+
+    The level is sliced into overlapping 14×PATCH_WIDTH patches using a
+    sliding window of stride PATCH_STRIDE (1 = maximum overlap: patch
+    starts are 0,1,2,3,... i.e. columns 0-24, 1-25, 2-26, ...). For each
+    patch, the training sequence is:
+
+        [ pure_path(H*PATCH_WIDTH) | structure(H*PATCH_WIDTH) ]
+
+    Both halves are flattened column-major (col0 row0..H-1, col1 row0..H-1, ...).
+    pure_path replaces every non-PATH_TOKEN character with 'P'.
+    structure is the complete tile map including path tokens at their positions.
+
+    Loss is computed on all structure positions (path tokens and non-path tiles alike).
+
+    2D absolute positions (x = column index within patch, shared by both
+    halves so a structure token aligns with its corresponding path token):
+        pure_path  col c_local: x=c_local, y=0..H-1
+        structure  col c_local: x=c_local, y=0..H-1
+
+    __getitem__ returns (input_ids, loss_mask, positions, attn_mask).
+    """
+
+    def __init__(
+        self,
+        tokenizer: Optional[PreTrainedTokenizer] = None,
+        level_string: Optional[str] = None,
+        height: int = 14,
+    ):
+        if level_string is None:
+            level_string = FULL_LEVEL_STR_WITH_PATHS
+
+        if tokenizer is None:
+            tokenizer = AutoTokenizer.from_pretrained(DEFAULT_MODEL)
+        self.tokenizer = tokenizer
+        self.height = height
+        H = height
+        self.patch_width = PATCH_WIDTH
+        self.future_width = FUTURE_WIDTH
+        self.seq_len = (2 * PATCH_WIDTH + FUTURE_WIDTH) * H  # 350+140+350 = 840
+
+        rows = [r for r in level_string.split("\n") if r.strip()]
+        assert len(rows) == H, f"Expected {H} rows, got {len(rows)}"
+        W = len(rows[0])
+
+        # tile_cols[c][r] = actual tile char at col c, row r (global index)
+        tile_cols: List[List[str]] = []
+        for c in range(W):
+            t_col = [rows[r][c] if c < len(rows[r]) else '-' for r in range(H)]
+            tile_cols.append(t_col)
+
+
+        samples_ids:  List[torch.Tensor] = []
+        samples_mask: List[torch.Tensor] = []
+        samples_pos:  List[torch.Tensor] = []
+        samples_attn: List[torch.Tensor] = []
+

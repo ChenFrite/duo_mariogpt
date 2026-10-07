@@ -56,9 +56,9 @@ mlruns/
 
 # --- Specific Ignore for your Project ---
 
-# 忽略訓練出來的模型資料夾 (位於 mario_gpt/ 下)
-mario_gpt/Mario-GPT2-700-context-length/
-mario_gpt/Mario-GPT2-*/
+# 忽略訓練出來的模型資料夾 (位於 mario_gpt_path/ 下)
+mario_gpt_path/Mario-GPT2-700-context-length/
+mario_gpt_path/Mario-GPT2-*/
 multi_iter_test*
 Mario-GPT2-*
 iteration_*
@@ -76,5 +76,5 @@ Mario-GPT2-*/
 *.safetensors
 *.ckpt
 
-# 忽略打包資訊 (您的結構中有 mario_gpt.egg-info)
+# 忽略打包資訊 (您的結構中有 mario_gpt_path.egg-info)
 *.egg-info/

@@ -1,0 +1,16 @@
+----------------------------------------------------------------------------------------------------
+-TTTTTTTTTTTT----------------------------------------------TTTTTTT--------------------------------TT
+-TTTTTTTT--TT---------TTTTTT-------------------------------TT---TT-----TTTTTT---------------------TT
+-TTT----TT-TT---------T---TT-------------------------------T-T-T-T-----T-TT-T----TTTTTT-----------TT
+-TTT-----TT-T---------T-TT-T-------------------------------T-TTT-T-----T-TT-T----TTTTTT-----------T-
+-TTTT--T-TT-T---------T-TT-T----------XXXX-----------------TT---TT-----TTTTTT----TTTTTT-----------TT
+-TTTTTTTTTTTT---------T-T-TT-------------------------------TTTTTTT--------------------------------TT
+----------------------TT--TT------------------------------------------------------------------------
+----------------------TTTTTTRWML--------------RWML------RWML----------------------------------------
+----------------------------R<>L--rwML--------RXXL------R<>L--------------------------------rwML----
+------------------CCC-------R[]L--rXXL--------RXXL------R[]L-------rwML---------------------r<>L----
+------------------UUU-------R[]L--rXXL--------RXXL------R[]L-------rXXL---------------------r[]L----
+MMMMMMMMMMMMMMMMMMAAAMMMMMMMJ[]MMMjXXMMMMMMMMMJXXMMMMMMMJ[]MMMMMMMMjXXMMMMMMMMMMMMMMMMMMMMMMj[]MMMMM
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+使用的PROMPT: "little pipes, little enemies, no blocks, little rects, no coins, high elevation, "

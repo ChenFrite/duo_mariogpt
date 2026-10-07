@@ -1,0 +1,47 @@
+{
+  "checkpoint": "/home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000",
+  "tokenizer": "/home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000",
+  "path": "/home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/test_path.txt",
+  "prompt": "some blocks, low elevation",
+  "seed": 0,
+  "device": "cuda:0",
+  "structure_tiles": 0,
+  "total_tiles": 1260,
+  "structure_counts": {},
+  "pre_forced_token_counts": {
+    "-": 1121,
+    "C": 37,
+    "j": 17,
+    "J": 3,
+    "M": 38,
+    "A": 7,
+    "U": 4,
+    "L": 23,
+    "R": 4,
+    "r": 3,
+    "w": 2,
+    "k": 1
+  },
+  "free_token_counts": {
+    "-": 1015,
+    "j": 16,
+    "M": 38,
+    "C": 33,
+    "A": 7,
+    "L": 16,
+    "J": 1,
+    "U": 1,
+    "w": 2,
+    "r": 1
+  },
+  "forced_mismatches": 0,
+  "score_cols": 16,
+  "reward": {
+    "reward": 0.49242424242424243,
+    "solvable": 0.0,
+    "adh_struct": 0.5,
+    "adh_path": 0.48484848484848486
+  },
+  "astar_mode": "mock",
+  "passed_nonzero_structure": false
+}

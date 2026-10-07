@@ -10,9 +10,9 @@
 
 從頭訓練 Path Expert 模型（不載入現有 checkpoint）。
 
-- 執行 `path/mario_gpt/diff_LR_train.py`
+- 執行 `path/mario_gpt_path/diff_LR_train.py`
 - 第 1 輪 LR = 5e-4，後續輪 LR = 1e-4
-- 輸出至 `path/mario_gpt/M_multiround_round{N}/`
+- 輸出至 `path/mario_gpt_path/M_multiround_round{N}/`
 
 ```bash
 bash run/path-expert_training.sh
@@ -38,8 +38,8 @@ bash run/structure-expert_training.sh
 
 依序執行 Path Expert 生成 → Structure Expert 生成。
 
-- Step 1：`path/mario_gpt/multi_test.py --count N`
-  - 生成 N 個路徑地圖，輸出至 `path/mario_gpt/multi_test/`
+- Step 1：`path/mario_gpt_path/multi_test.py --count N`
+  - 生成 N 個路徑地圖，輸出至 `path/mario_gpt_path/multi_test/`
 - Step 2：`structure/mario_gpt/pipeline_pathexpert.py`
   - 讀取所有路徑檔，強制植入路徑 token，輸出至 `structure/mario_gpt/pipeline_out/`
 

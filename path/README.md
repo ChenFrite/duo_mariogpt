@@ -32,16 +32,14 @@ Requirements
 
 Installation
 ---------------
-from pypi
-```
-pip install mario-gpt
+From this `path` directory, install the path expert in the active environment:
+
+```bash
+python -m pip install -e .
 ```
 
-or from source
-```
-git clone git@github.com:shyamsn97/mario-gpt.git
-python setup.py install
-```
+This distribution is named `mario-gpt-path`; import it as `mario_gpt_path`.
+The upstream project is available at [MarioGPT](https://github.com/shyamsn97/mario-gpt).
 
 
 Generating Levels
@@ -52,7 +50,7 @@ Since our models are built off of the amazing [transformers](https://github.com/
 This code snippet is the minimal code you need to generate a mario level!
 
 ```python
-from mario_gpt import MarioLM, SampleOutput
+from mario_gpt_path import MarioLM, SampleOutput
 
 # pretrained_model = shyamsn97/Mario-GPT2-700-context-length
 
@@ -110,11 +108,11 @@ loaded_level.play()
 
 Training
 -------------
-The code to train MarioGPT is pretty simple and straightforward, the training class is located [here](mario_gpt/trainer.py), with a small example [notebook](notebooks/Train.ipynb)
+The code to train MarioGPT is pretty simple and straightforward, the training class is located [here](mario_gpt_path/trainer.py), with a small example [notebook](notebooks/Train.ipynb)
 
 ```python
 import torch
-from mario_gpt import MarioDataset, MarioLM, TrainingConfig, MarioGPTTrainer
+from mario_gpt_path import MarioDataset, MarioLM, TrainingConfig, MarioGPTTrainer
 
 # create basic gpt model
 BASE = "distilgpt2"
@@ -140,10 +138,10 @@ Interacting with Levels
 Right now there are two ways to interact with generated levels:
 
 1) [Huggingface demo](https://huggingface.co/spaces/multimodalart/mariogpt) -- Thanks to the amazing work by [multimodalart](https://github.com/multimodalart), you can generate and play levels interactively in the browser! In addition, gpus are provided so you don't have to own one yourself.
-2) Using the [play and astar methods](mario_gpt/simulator/simulator.py). These require you to have java installed on your computer (Java 8+ tested). For interactive, use the `play()` method and for astar use the `run_astar` method. Example:
+2) Using the [play and astar methods](mario_gpt_path/simulator/simulator.py). These require you to have java installed on your computer (Java 8+ tested). For interactive, use the `play()` method and for astar use the `run_astar` method. Example:
 
 ```python
-from mario_gpt import MarioLM
+from mario_gpt_path import MarioLM
 
 mario_lm = MarioLM()
 

@@ -1,0 +1,231 @@
+=== PIPELINE PATH-EXPERT -> STRUCTURE REPORT ===
+
+--- [generated_level_0.txt] ---
+使用的PROMPT: "no pipes, some enemies, little blocks, no rects, some coins, low elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=little, block=little, rect=some, coin=no, elevation=low
+窗1 col  25- 49: pipe=no, enemy=no, block=no, rect=no, coin=some, elevation=low
+窗2 col  50- 74: pipe=no, enemy=little, block=little, rect=no, coin=little, elevation=low
+窗3 col  75- 99: pipe=no, enemy=little, block=little, rect=no, coin=no, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[符合] Pipe      : 目標=no      符合 100%  實際=[no,no,no,no]
+[不符] Enemy     : 目標=some    符合   0%  實際=[little,no,little,little]
+[符合] Block     : 目標=little  符合  75%  實際=[little,no,little,little]
+[符合] Rect      : 目標=no      符合  75%  實際=[some,no,no,no]
+[不符] Coin      : 目標=some    符合  25%  實際=[no,some,little,no]
+[符合] Elevation : 目標=low     符合 100%  實際=[low,low,low,low]
+------------------------------------------------------------
+
+
+--- [generated_level_1.txt] ---
+使用的PROMPT: "no pipes, little enemies, little blocks, many rects, some coins, low elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=no, block=many, rect=no, coin=many, elevation=high
+窗1 col  25- 49: pipe=no, enemy=no, block=some, rect=some, coin=some, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=many, rect=no, coin=some, elevation=low
+窗3 col  75- 99: pipe=no, enemy=no, block=little, rect=no, coin=little, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[符合] Pipe      : 目標=no      符合 100%  實際=[no,no,no,no]
+[不符] Enemy     : 目標=little  符合   0%  實際=[no,no,no,no]
+[不符] Block     : 目標=little  符合  25%  實際=[many,some,many,little]
+[不符] Rect      : 目標=many    符合   0%  實際=[no,some,no,no]
+[符合] Coin      : 目標=some    符合  50%  實際=[many,some,some,little]
+[符合] Elevation : 目標=low     符合  50%  實際=[high,high,low,low]
+------------------------------------------------------------
+
+
+--- [generated_level_2.txt] ---
+使用的PROMPT: "little pipes, many enemies, many blocks, many rects, little coins, high elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=no, block=some, rect=no, coin=no, elevation=high
+窗1 col  25- 49: pipe=no, enemy=many, block=many, rect=no, coin=little, elevation=low
+窗2 col  50- 74: pipe=no, enemy=some, block=little, rect=no, coin=many, elevation=high
+窗3 col  75- 99: pipe=no, enemy=some, block=many, rect=no, coin=many, elevation=high
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[不符] Pipe      : 目標=little  符合   0%  實際=[no,no,no,no]
+[不符] Enemy     : 目標=many    符合  25%  實際=[no,many,some,some]
+[符合] Block     : 目標=many    符合  50%  實際=[some,many,little,many]
+[不符] Rect      : 目標=many    符合   0%  實際=[no,no,no,no]
+[不符] Coin      : 目標=little  符合  25%  實際=[no,little,many,many]
+[符合] Elevation : 目標=high    符合  75%  實際=[high,low,high,high]
+------------------------------------------------------------
+
+
+--- [generated_level_3.txt] ---
+使用的PROMPT: "some pipes, some enemies, little blocks, some rects, no coins, high elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=some, enemy=no, block=little, rect=no, coin=no, elevation=high
+窗1 col  25- 49: pipe=no, enemy=some, block=no, rect=no, coin=no, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=little, rect=many, coin=no, elevation=low
+窗3 col  75- 99: pipe=no, enemy=no, block=little, rect=many, coin=no, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[不符] Pipe      : 目標=some    符合  25%  實際=[some,no,no,no]
+[不符] Enemy     : 目標=some    符合  25%  實際=[no,some,no,no]
+[符合] Block     : 目標=little  符合  75%  實際=[little,no,little,little]
+[不符] Rect      : 目標=some    符合   0%  實際=[no,no,many,many]
+[符合] Coin      : 目標=no      符合 100%  實際=[no,no,no,no]
+[符合] Elevation : 目標=high    符合  50%  實際=[high,high,low,low]
+------------------------------------------------------------
+
+
+--- [generated_level_4.txt] ---
+使用的PROMPT: "no pipes, little enemies, little blocks, many rects, little coins, high elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=little, enemy=no, block=little, rect=no, coin=no, elevation=high
+窗1 col  25- 49: pipe=no, enemy=no, block=no, rect=no, coin=no, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=little, rect=no, coin=some, elevation=high
+窗3 col  75- 99: pipe=no, enemy=little, block=many, rect=no, coin=some, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[符合] Pipe      : 目標=no      符合  75%  實際=[little,no,no,no]
+[不符] Enemy     : 目標=little  符合  25%  實際=[no,no,no,little]
+[符合] Block     : 目標=little  符合  50%  實際=[little,no,little,many]
+[不符] Rect      : 目標=many    符合   0%  實際=[no,no,no,no]
+[不符] Coin      : 目標=little  符合   0%  實際=[no,no,some,some]
+[符合] Elevation : 目標=high    符合  75%  實際=[high,high,high,low]
+------------------------------------------------------------
+
+
+--- [generated_level_5.txt] ---
+使用的PROMPT: "no pipes, little enemies, little blocks, some rects, little coins, high elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=no, block=little, rect=little, coin=no, elevation=low
+窗1 col  25- 49: pipe=no, enemy=little, block=little, rect=some, coin=some, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=little, rect=little, coin=little, elevation=low
+窗3 col  75- 99: pipe=no, enemy=no, block=little, rect=little, coin=no, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[符合] Pipe      : 目標=no      符合 100%  實際=[no,no,no,no]
+[不符] Enemy     : 目標=little  符合  25%  實際=[no,little,no,no]
+[符合] Block     : 目標=little  符合 100%  實際=[little,little,little,little]
+[不符] Rect      : 目標=some    符合  25%  實際=[little,some,little,little]
+[不符] Coin      : 目標=little  符合  25%  實際=[no,some,little,no]
+[不符] Elevation : 目標=high    符合  25%  實際=[low,high,low,low]
+------------------------------------------------------------
+
+
+--- [generated_level_6.txt] ---
+使用的PROMPT: "many pipes, many enemies, many blocks, many rects, some coins, low elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=little, enemy=some, block=many, rect=no, coin=many, elevation=low
+窗1 col  25- 49: pipe=no, enemy=little, block=many, rect=no, coin=many, elevation=high
+窗2 col  50- 74: pipe=some, enemy=many, block=many, rect=no, coin=many, elevation=high
+窗3 col  75- 99: pipe=no, enemy=some, block=many, rect=no, coin=many, elevation=high
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[不符] Pipe      : 目標=many    符合   0%  實際=[little,no,some,no]
+[不符] Enemy     : 目標=many    符合  25%  實際=[some,little,many,some]
+[符合] Block     : 目標=many    符合 100%  實際=[many,many,many,many]
+[不符] Rect      : 目標=many    符合   0%  實際=[no,no,no,no]
+[不符] Coin      : 目標=some    符合   0%  實際=[many,many,many,many]
+[不符] Elevation : 目標=low     符合  25%  實際=[low,high,high,high]
+------------------------------------------------------------
+
+
+--- [generated_level_7.txt] ---
+使用的PROMPT: "no pipes, little enemies, little blocks, no rects, some coins, low elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=little, block=no, rect=no, coin=some, elevation=high
+窗1 col  25- 49: pipe=no, enemy=little, block=no, rect=no, coin=little, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=little, rect=little, coin=some, elevation=high
+窗3 col  75- 99: pipe=no, enemy=some, block=no, rect=no, coin=little, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[符合] Pipe      : 目標=no      符合 100%  實際=[no,no,no,no]
+[符合] Enemy     : 目標=little  符合  50%  實際=[little,little,no,some]
+[不符] Block     : 目標=little  符合  25%  實際=[no,no,little,no]
+[符合] Rect      : 目標=no      符合  75%  實際=[no,no,little,no]
+[符合] Coin      : 目標=some    符合  50%  實際=[some,little,some,little]
+[不符] Elevation : 目標=low     符合  25%  實際=[high,high,high,low]
+------------------------------------------------------------
+
+
+--- [generated_level_8.txt] ---
+使用的PROMPT: "little pipes, little enemies, no blocks, some rects, many coins, high elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=no, enemy=no, block=no, rect=many, coin=no, elevation=low
+窗1 col  25- 49: pipe=no, enemy=no, block=no, rect=no, coin=no, elevation=high
+窗2 col  50- 74: pipe=no, enemy=no, block=no, rect=no, coin=some, elevation=low
+窗3 col  75- 99: pipe=no, enemy=no, block=no, rect=no, coin=no, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[不符] Pipe      : 目標=little  符合   0%  實際=[no,no,no,no]
+[不符] Enemy     : 目標=little  符合   0%  實際=[no,no,no,no]
+[符合] Block     : 目標=no      符合 100%  實際=[no,no,no,no]
+[不符] Rect      : 目標=some    符合   0%  實際=[many,no,no,no]
+[不符] Coin      : 目標=many    符合   0%  實際=[no,no,some,no]
+[不符] Elevation : 目標=high    符合  25%  實際=[low,high,low,low]
+------------------------------------------------------------
+
+
+--- [generated_level_9.txt] ---
+使用的PROMPT: "many pipes, many enemies, many blocks, little rects, little coins, low elevation, "
+
+============================================================
+逐窗判定（4 個 25 欄視窗，與訓練 patch 同尺度）
+============================================================
+窗0 col   0- 24: pipe=some, enemy=many, block=many, rect=little, coin=little, elevation=low
+窗1 col  25- 49: pipe=no, enemy=little, block=little, rect=little, coin=no, elevation=low
+窗2 col  50- 74: pipe=little, enemy=some, block=many, rect=no, coin=little, elevation=low
+窗3 col  75- 99: pipe=some, enemy=some, block=some, rect=many, coin=some, elevation=low
+------------------------------------------------------------
+差異比對結果（符合視窗比例）:
+------------------------------------------------------------
+[不符] Pipe      : 目標=many    符合   0%  實際=[some,no,little,some]
+[不符] Enemy     : 目標=many    符合  25%  實際=[many,little,some,some]
+[符合] Block     : 目標=many    符合  50%  實際=[many,little,many,some]
+[符合] Rect      : 目標=little  符合  50%  實際=[little,little,no,many]
+[符合] Coin      : 目標=little  符合  50%  實際=[little,no,little,some]
+[符合] Elevation : 目標=low     符合 100%  實際=[low,low,low,low]
+------------------------------------------------------------
+
+
+
+=== FINAL STATISTICS SUMMARY ===
+
+Pipe      : 5/10 correct (50.0%)  | 平均視窗符合率 50.0%
+Enemy     : 1/10 correct (10.0%)  | 平均視窗符合率 20.0%
+Block     : 8/10 correct (80.0%)  | 平均視窗符合率 65.0%
+Rect      : 3/10 correct (30.0%)  | 平均視窗符合率 22.5%
+Coin      : 4/10 correct (40.0%)  | 平均視窗符合率 32.5%
+Elevation : 6/10 correct (60.0%)  | 平均視窗符合率 55.0%

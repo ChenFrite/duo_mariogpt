@@ -1,0 +1,50 @@
+Loading model   : /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000
+Loading tokenizer: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000
+Using /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000 lm
+Using /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Mario-GPT2-700-context-length_29/iteration_10000 tokenizer
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Device: cuda:0; seed: 0
+
+Generating with pure sampler.sample(), path=/home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/test_path.txt ...
+STRUCT prompt: some blocks, low elevation
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+Saved sampler_baseline.txt
+Pre-forced model token counts: {'-': 1121, 'C': 37, 'j': 17, 'J': 3, 'M': 38, 'A': 7, 'U': 4, 'L': 23, 'R': 4, 'r': 3, 'w': 2, 'k': 1}
+Final tile counts: {'-': 1015, 'j': 18, 'M': 115, 'C': 36, 'A': 10, 'L': 33, 'J': 4, 'R': 12, 'W': 3, 'r': 6, 'w': 4, 'U': 4}
+Free-position tile counts: {'-': 1015, 'j': 16, 'M': 38, 'C': 33, 'A': 7, 'L': 16, 'J': 1, 'U': 1, 'w': 2, 'r': 1}
+Forced-position mismatches: 0
+
+=== Generated level ===
+--j---MjjCAjM-MC---MC-----MLM-MCMAMM-M-MM-MMMM--LCCAAMMMj---MMJMACjj--LLjjAAMMMMMM-ML-M-MM
+----------C------------C-------C-------j-----------CC--------------L---L--CC----C---------
+----------C---------------------------------------------------------------------L---------
+----------------------------------------------------------------------------C---L---------
+--------------------------------------------------------------------------------L---------
+-------C------------------------------------------------------------------------L---------
+----------------------------------------------C---------C-----------------------C---------
+-------------------------------C----C-------------------------------------------C---------
+----------------------------RWML----C---------RWML------RWML--------------------C---------
+----------------------------R--L--rwML--------R--L------R--L--------------------M---------
+----------CM------CCC-------R--L--r--LM-------Rj-L------R--L-------rwML--U----------------
+----------C-------UUU----jM-R--L--r--L--------RL-L------R-jL-------r--L--C---C------------
+MMMMMMMMMMMMMMMMMMAAAMMMMMMMJ--MMMj--MMMMMMMMMJL-MMMMMMMJw-MMMMMMMMj--MMMMMMMMMMMMMMMMMMMM
+C------------------CC-----L---j---r------------L--------------------Mjj------------wL-----
+
+=== Structure diagnosis ===
+  structure tiles: 0 / 1260 (0.0%)
+  breakdown: {}
+  [!!] 結構全 0 —— 模型可能沒載入對、或 checkpoint 有問題
+
+=== Baseline reward (first 16 cols, mock A*) ===
+  reward       = 0.4924
+  solvable     = 0.0000
+  adh_struct   = 0.5000
+  adh_path     = 0.4848
+
+判斷：
+  非全零結構只是必要條件，reward 接近 2.0 並非驗收要求
+  結構全 0 → 生成／模型／資料問題待診斷，不執行難度掃描

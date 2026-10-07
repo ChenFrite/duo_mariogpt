@@ -1,0 +1,31 @@
+paths: 10 條
+Loading MarioLM: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000
+Using /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000 lm
+Using shyamsn97/Mario-GPT2-700-context-length tokenizer
+prompts: 4 個（seed=0）
+   - many pipes, many enemies, no blocks, some rects, many coins, high elevation,
+   - little pipes, some enemies, no blocks, no rects, some coins, high elevation,
+   - many pipes, no enemies, many blocks, some rects, little coins, high elevation,
+   - some pipes, some enemies, no blocks, some rects, little coins, high elevation,
+
+K_LIST=[4]  TARGET_COLS=16  SEG_COLS=2  N_TRIALS=1  λs=1.0 λp=0.25
+
+================================================================
+K=4   (n = 40 組 path×prompt×trial)
+----------------------------------------------------------------
+  greedy reward : 1.498 ± 0.437
+  search reward : 1.929 ± 0.299
+  mean gain     : +0.431
+  win-rate      : 100.0%  (search ≥ greedy)
+  adh_struct    : greedy 0.473 → search 0.781
+  cost (cand)   : greedy 32  search 480  (15.0x)
+  per-feature 命中目標 label 比例 (greedy → search):
+     pipe      :   5.0% →  42.5%
+     enemy     :  25.0% →  70.0%
+     block     :  60.0% →  77.5%
+     rect      :  27.5% →  27.5%
+     coin      :   7.5% →  52.5%
+     elevation :  10.0% →  52.5%
+================================================================
+
+CSV 寫出：/home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/batch_results.csv  (40 列)

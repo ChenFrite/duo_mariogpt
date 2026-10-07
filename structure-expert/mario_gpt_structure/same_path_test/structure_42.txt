@@ -1,0 +1,16 @@
+----------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+---------------------------TTTTT---------------TTTT--------SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+---------------------------T-T-T---------------TTTT--------SSSSSSS--------------------[]------------
+------ooooo----------------T-T-T---------------TTTT--------SSSSSSS--------------------[]------------
+--XS-SSSSSSSSSS------------TTT-T---------------TTTT--------SSSSSSS------E---X---------[]------------
+--[]---------[]--------XX--TTTTT-----oooooooo--------------------------<>---X------o--[]-------SS-SS
+--[]---------[]---------X-----------------------------------------------[]--X---------[]--------S-SS
+--[]---------[]---------X---RWML--------------RWML------RWML-----S------[]--X---------[]--------SoSS
+X-[]---------[]--------SX---R<>L--rwML--------R<>L------RXXL------------[]--XSSSSSSSSS[]----rwML-S--
+--<>---------<>-ooCCC-------R[]L--r<>L--------R[]L------RXXL-------rwML-<>------------<>----r<>L----
+------------------UUU-------R[]L--r[]L--------R[]L------RXXL-------r<>L---------------------r[]L---E
+MMMMMMMMMMMMMMMMMMAAAMMMMMMMJ[]MMMj[]MMMMMMMMMJ[]MMMMMMMJXXMMMMMMMMj[]MMMMMMMMMMMMMMMMMMMMMMj[]MMMMM
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+使用的PROMPT: "many pipes, some enemies, some blocks, many rects, many coins, high elevation, "

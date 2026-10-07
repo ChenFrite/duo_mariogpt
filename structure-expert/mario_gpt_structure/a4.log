@@ -1,0 +1,14 @@
+Loading model Structure-GPT2-v2/iteration_10000, tokenizer shyamsn97/Mario-GPT2-700-context-length ...
+Using Structure-GPT2-v2/iteration_10000 lm
+Using shyamsn97/Mario-GPT2-700-context-length tokenizer
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Using path: test_path.txt, width=100
+Prompt: 'no pipes, many enemies, many blocks, many rects, no coins, high elevation, '  lambda_s=1.0 lambda_p=0.25
+
+=== Running 10 trials each ===
+
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(

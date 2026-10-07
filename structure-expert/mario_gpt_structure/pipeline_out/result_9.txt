@@ -1,0 +1,16 @@
+-----------------TTT-----------------------------------------------------------TTTT-----------------
+-----------------TTT---------TTTTTTTT---TTTTT--TTTTTT--------------------------TTTT---TTTTT---------
+-----------------TTT---------TTT-T-TT---T-TTT--T-TTTT--------------------------TTTT---TTTTT--TTTT---
+-----------------TTT---------TT-T-TTT---T-TTT--T-TT-T--------------------------TTTT---TTTTT--T-TT---
+------------------SS---------T-TTTT-T---T--TT--T---TT--------------E--o----ooooSSSS---TTTTT--T--T---
+-----------SSSS-SSSS--SSSS---T--TTT-T---TT-TT--T----T-----SSSSSSSSSSSSSSSSSSSSSSSSS---TTTTT--TT-T---
+-----------[]---------[]-----TT--TT-T---TTTTT--T---TT----------------------[]---------TTTTT--TTTT---
+---o--[]---[]----<>---[]-----TT----TT----------T---TT----------------------[]---------TTTTT---------
+----oo[]---[]----[]-E-[]-----TTTTTTTT----------TTTTTT-KKKK-------RWML---E--[]---------TTTTT---------
+SSSSSSSS---<>kj--[]---[]--------------S----CC--TTTTTTK----KK-----R<>L-SSSSS[]-----------------------
+------------k-X--[]---<>-------------------CC-------K-------K----R[]L------<>------------kkwML---kwM
+------E-E-----X-E--------------------------CC---E----------------R[]L-------E-----------j--<>L----XX
+MMMMMMMMMMMjE-XMMMMMMMMMMMMMMMMMMMMMMMMMMMMAAMMMMMMJ---------WMMMJ[]MMMMMMMMMMMMMMMMMMMjB--[]MMMj-XX
+XXXXXXXXXXXX--XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX---------XXXXXXXXXXXXXXXXXXXXXXXXXXXX--XXXXXX-XX
+
+使用的PROMPT: "many pipes, many enemies, many blocks, little rects, little coins, low elevation, "

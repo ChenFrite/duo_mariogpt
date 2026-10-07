@@ -1,0 +1,260 @@
+=== PATH EXPERT BATCH GENERATION REPORT ===
+
+--- [Run #1] ---
+使用的PROMPT: "many moves, some big jumps, many small jumps, little air moves, little coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        62 -> [many]
+J (big jumps):     2 -> [little]
+j (small jumps):  13 -> [some]
+A (air moves):     6 -> [some]
+C (coins):        12 -> [many]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, some small jumps, some air moves, many coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[符合] M         : many       
+[不符] J         : little       (預期: some | 實際: little)
+[不符] j         : some         (預期: many | 實際: some)
+[不符] A         : some         (預期: little | 實際: some)
+[不符] C         : many         (預期: little | 實際: many)
+--------------------------------------------------
+
+
+--- [Run #2] ---
+使用的PROMPT: "no moves, some big jumps, no small jumps, little air moves, no coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        94 -> [many]
+J (big jumps):     0 -> [no]
+j (small jumps):   3 -> [little]
+A (air moves):     0 -> [no]
+C (coins):         0 -> [no]
+--------------------------------------------------
+實際對應 Prompt: "many moves, no big jumps, little small jumps, no air moves, no coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: no | 實際: many)
+[不符] J         : no           (預期: some | 實際: no)
+[不符] j         : little       (預期: no | 實際: little)
+[不符] A         : no           (預期: little | 實際: no)
+[符合] C         : no         
+--------------------------------------------------
+
+
+--- [Run #3] ---
+使用的PROMPT: "some moves, many big jumps, many small jumps, no air moves, many coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        24 -> [some]
+J (big jumps):     3 -> [little]
+j (small jumps):  14 -> [some]
+A (air moves):     2 -> [little]
+C (coins):        26 -> [many]
+--------------------------------------------------
+實際對應 Prompt: "some moves, little big jumps, some small jumps, little air moves, many coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[符合] M         : some       
+[不符] J         : little       (預期: many | 實際: little)
+[不符] j         : some         (預期: many | 實際: some)
+[不符] A         : little       (預期: no | 實際: little)
+[符合] C         : many       
+--------------------------------------------------
+
+
+--- [Run #4] ---
+使用的PROMPT: "little moves, no big jumps, little small jumps, some air moves, some coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        48 -> [many]
+J (big jumps):     0 -> [no]
+j (small jumps):  16 -> [many]
+A (air moves):     3 -> [little]
+C (coins):         2 -> [little]
+--------------------------------------------------
+實際對應 Prompt: "many moves, no big jumps, many small jumps, little air moves, little coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: little | 實際: many)
+[符合] J         : no         
+[不符] j         : many         (預期: little | 實際: many)
+[不符] A         : little       (預期: some | 實際: little)
+[不符] C         : little       (預期: some | 實際: little)
+--------------------------------------------------
+
+
+--- [Run #5] ---
+使用的PROMPT: "little moves, little big jumps, some small jumps, no air moves, many coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        42 -> [many]
+J (big jumps):     6 -> [some]
+j (small jumps):  13 -> [some]
+A (air moves):     0 -> [no]
+C (coins):         2 -> [little]
+--------------------------------------------------
+實際對應 Prompt: "many moves, some big jumps, some small jumps, no air moves, little coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: little | 實際: many)
+[不符] J         : some         (預期: little | 實際: some)
+[符合] j         : some       
+[符合] A         : no         
+[不符] C         : little       (預期: many | 實際: little)
+--------------------------------------------------
+
+
+--- [Run #6] ---
+使用的PROMPT: "no moves, little big jumps, no small jumps, many air moves, many coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        81 -> [many]
+J (big jumps):     3 -> [little]
+j (small jumps):   3 -> [little]
+A (air moves):     2 -> [little]
+C (coins):         4 -> [some]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, little small jumps, little air moves, some coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: no | 實際: many)
+[符合] J         : little     
+[不符] j         : little       (預期: no | 實際: little)
+[不符] A         : little       (預期: many | 實際: little)
+[不符] C         : some         (預期: many | 實際: some)
+--------------------------------------------------
+
+
+--- [Run #7] ---
+使用的PROMPT: "some moves, little big jumps, no small jumps, many air moves, some coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        68 -> [many]
+J (big jumps):     3 -> [little]
+j (small jumps):   0 -> [no]
+A (air moves):     7 -> [some]
+C (coins):         9 -> [many]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, no small jumps, some air moves, many coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: some | 實際: many)
+[符合] J         : little     
+[符合] j         : no         
+[不符] A         : some         (預期: many | 實際: some)
+[不符] C         : many         (預期: some | 實際: many)
+--------------------------------------------------
+
+
+--- [Run #8] ---
+使用的PROMPT: "little moves, some big jumps, no small jumps, many air moves, many coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        63 -> [many]
+J (big jumps):     3 -> [little]
+j (small jumps):   3 -> [little]
+A (air moves):     8 -> [some]
+C (coins):        19 -> [many]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, little small jumps, some air moves, many coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: little | 實際: many)
+[不符] J         : little       (預期: some | 實際: little)
+[不符] j         : little       (預期: no | 實際: little)
+[不符] A         : some         (預期: many | 實際: some)
+[符合] C         : many       
+--------------------------------------------------
+
+
+--- [Run #9] ---
+使用的PROMPT: "no moves, little big jumps, many small jumps, some air moves, little coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        46 -> [many]
+J (big jumps):     2 -> [little]
+j (small jumps):  13 -> [some]
+A (air moves):     1 -> [little]
+C (coins):         5 -> [some]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, some small jumps, little air moves, some coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: no | 實際: many)
+[符合] J         : little     
+[不符] j         : some         (預期: many | 實際: some)
+[不符] A         : little       (預期: some | 實際: little)
+[不符] C         : some         (預期: little | 實際: some)
+--------------------------------------------------
+
+
+--- [Run #10] ---
+使用的PROMPT: "no moves, little big jumps, little small jumps, many air moves, many coins collected"
+
+==================================================
+路徑 Token 統計
+==================================================
+M (moves):        73 -> [many]
+J (big jumps):     2 -> [little]
+j (small jumps):   5 -> [little]
+A (air moves):     2 -> [little]
+C (coins):         6 -> [some]
+--------------------------------------------------
+實際對應 Prompt: "many moves, little big jumps, little small jumps, little air moves, some coins collected"
+==================================================
+
+差異比對結果:
+--------------------------------------------------
+[不符] M         : many         (預期: no | 實際: many)
+[符合] J         : little     
+[符合] j         : little     
+[不符] A         : little       (預期: many | 實際: little)
+[不符] C         : some         (預期: many | 實際: some)
+--------------------------------------------------
+
+
+
+=== FINAL STATISTICS SUMMARY ===
+
+M         : 2/10 correct (20.0%)
+J         : 5/10 correct (50.0%)
+j         : 3/10 correct (30.0%)
+A         : 1/10 correct (10.0%)
+C         : 3/10 correct (30.0%)

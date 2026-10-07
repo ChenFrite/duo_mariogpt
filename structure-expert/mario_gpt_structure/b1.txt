@@ -1,0 +1,756 @@
+gradient_accumulation_steps -- 1
+mixed_precision -- bf16
+output_dir -- /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2
+learning_rate -- 0.0005
+epsilon -- 1e-09
+lr_warmup_steps -- 150
+batch_size -- 4
+total_steps -- 10001
+mask_proportion -- 0.0
+eval_iteration -- 1000
+save_iteration -- 1000
+save_prefix -- 10000
+eval_batches -- 8
+================== MarioLM ==================
+>>> Trainer: After load, model class = <class 'mario_gpt_structure.lm.gpt2_2dpos_model.GPT2With2DSinusoids'>
+  0%|                                     | 0/10001 [00:00<?, ?it/s]/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+{'loss': 11.381893157958984, 'loss_ma100': 11.381893157958984, 'last/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+{'loss': 0.3752991557121277, 'loss_ma100': 0.46849179923534395, 'las
+{'loss': 0.11637292802333832, 'loss_ma100': 0.15545603662729263, 'la[Eval] step=1000, val_loss=0.1408
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,1000
+{'loss': 0.19083084166049957, 'loss_ma100': 0.13379635244607926, 'la[Eval] step=2000, val_loss=0.1288
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,2000
+{'loss': 0.11159823089838028, 'loss_ma100': 0.12614304766058923, 'la[Eval] step=3000, val_loss=0.1246
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,3000
+{'loss': 0.16849789023399353, 'loss_ma100': 0.11891013234853745, 'la[Eval] step=4000, val_loss=0.1180
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,4000
+{'loss': 0.11342020332813263, 'loss_ma100': 0.11248363606631756, 'la[Eval] step=5000, val_loss=0.1157
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,5000
+{'loss': 0.11249317973852158, 'loss_ma100': 0.10514233965426684, 'la[Eval] step=6000, val_loss=0.1033
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,6000
+{'loss': 0.10434812307357788, 'loss_ma100': 0.09743154238909484, 'la[Eval] step=7000, val_loss=0.0993
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,7000
+{'loss': 0.07645642757415771, 'loss_ma100': 0.08078760644420982, 'la[Eval] step=8000, val_loss=0.1000
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,8000
+{'loss': 0.07602660357952118, 'loss_ma100': 0.07170174729079008, 'la[Eval] step=9000, val_loss=0.1027
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,9000
+{'loss': 0.05385114997625351, 'loss_ma100': 0.06114673936739564, 'la[Eval] step=10000, val_loss=0.1015
+----- Model saved at iteration /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2,10000
+{'loss': 0.05385114997625351, 'loss_ma100': 0.06114673936739564, 'la
+Output directory: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out
+找到 10 個路徑檔案。
+Loading MarioLM from /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000 ...
+Using /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000 lm
+Using shyamsn97/Mario-GPT2-700-context-length tokenizer
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Using device: cuda
+
+--- 處理 generated_level_0.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: no pipes, many enemies, many blocks, little rects, some coins, low elevation, 
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/PIL/Image.py:1136: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_0.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_0.png
+
+--- 處理 generated_level_1.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, no enemies, many blocks, little rects, little coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_1.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_1.png
+
+--- 處理 generated_level_2.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, some enemies, little blocks, some rects, no coins, low elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_2.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_2.png
+
+--- 處理 generated_level_3.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, many enemies, no blocks, no rects, no coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_3.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_3.png
+
+--- 處理 generated_level_4.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, no enemies, no blocks, little rects, little coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_4.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_4.png
+
+--- 處理 generated_level_5.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, little enemies, no blocks, some rects, little coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_5.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_5.png
+
+--- 處理 generated_level_6.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: some pipes, many enemies, little blocks, many rects, many coins, low elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_6.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_6.png
+
+--- 處理 generated_level_7.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: little pipes, no enemies, many blocks, some rects, little coins, low elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_7.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_7.png
+
+--- 處理 generated_level_8.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: many pipes, some enemies, no blocks, many rects, little coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_8.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_8.png
+
+--- 處理 generated_level_9.txt ---
+  path_grid: 14 行 x 100 欄
+  Prompt: some pipes, no enemies, no blocks, some rects, little coins, high elevation, 
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_9.txt
+  Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/result_9.png
+
+========================================
+       FINAL ACCURACY STATISTICS       
+========================================
+Pipe      : 2/10 correct (20.0%)  | 平均視窗符合率 20.0%
+Enemy     : 6/10 correct (60.0%)  | 平均視窗符合率 60.0%
+Block     : 4/10 correct (40.0%)  | 平均視窗符合率 47.5%
+Rect      : 1/10 correct (10.0%)  | 平均視窗符合率 17.5%
+Coin      : 5/10 correct (50.0%)  | 平均視窗符合率 47.5%
+Elevation : 6/10 correct (60.0%)  | 平均視窗符合率 55.0%
+
+Full report saved to /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/pipeline_out/report.txt
+Output directory: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test
+Loading MarioLM from /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000 ...
+Using /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/Structure-GPT2-v2/iteration_10000 lm
+Using shyamsn97/Mario-GPT2-700-context-length tokenizer
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/huggingface_hub/file_download.py:949: FutureWarning: `resume_download` is deprecated and will be removed in version 1.0.0. Downloads always resume when possible. If you want to force a new download, use `force_download=True`.
+  warnings.warn(
+Using device: cuda
+
+Starting batch generation for 100 iterations...
+
+--- Iteration 1/100 ---
+Prompt: some pipes, no enemies, little blocks, little rects, no coins, high elevation, 
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/transformers/modeling_utils.py:884: FutureWarning: The `device` argument is deprecated and will be removed in v5 of Transformers.
+  warnings.warn(
+/home/isslab411/miniconda3/envs/marioexpert/lib/python3.10/site-packages/PIL/Image.py:1136: UserWarning: Palette images with Transparency expressed in bytes should be converted to RGBA images
+  warnings.warn(
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_0.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_0.png
+Analysis completed.
+
+--- Iteration 2/100 ---
+Prompt: many pipes, some enemies, many blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_1.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_1.png
+Analysis completed.
+
+--- Iteration 3/100 ---
+Prompt: some pipes, many enemies, no blocks, some rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_2.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_2.png
+Analysis completed.
+
+--- Iteration 4/100 ---
+Prompt: little pipes, no enemies, some blocks, many rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_3.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_3.png
+Analysis completed.
+
+--- Iteration 5/100 ---
+Prompt: no pipes, many enemies, little blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_4.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_4.png
+Analysis completed.
+
+--- Iteration 6/100 ---
+Prompt: some pipes, no enemies, many blocks, some rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_5.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_5.png
+Analysis completed.
+
+--- Iteration 7/100 ---
+Prompt: little pipes, little enemies, no blocks, no rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_6.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_6.png
+Analysis completed.
+
+--- Iteration 8/100 ---
+Prompt: little pipes, no enemies, little blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_7.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_7.png
+Analysis completed.
+
+--- Iteration 9/100 ---
+Prompt: many pipes, some enemies, little blocks, little rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_8.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_8.png
+Analysis completed.
+
+--- Iteration 10/100 ---
+Prompt: little pipes, some enemies, some blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_9.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_9.png
+Analysis completed.
+
+--- Iteration 11/100 ---
+Prompt: little pipes, many enemies, many blocks, many rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_10.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_10.png
+Analysis completed.
+
+--- Iteration 12/100 ---
+Prompt: some pipes, many enemies, no blocks, little rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_11.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_11.png
+Analysis completed.
+
+--- Iteration 13/100 ---
+Prompt: some pipes, some enemies, many blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_12.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_12.png
+Analysis completed.
+
+--- Iteration 14/100 ---
+Prompt: little pipes, no enemies, many blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_13.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_13.png
+Analysis completed.
+
+--- Iteration 15/100 ---
+Prompt: little pipes, many enemies, many blocks, many rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_14.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_14.png
+Analysis completed.
+
+--- Iteration 16/100 ---
+Prompt: some pipes, some enemies, no blocks, some rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_15.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_15.png
+Analysis completed.
+
+--- Iteration 17/100 ---
+Prompt: many pipes, some enemies, some blocks, no rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_16.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_16.png
+Analysis completed.
+
+--- Iteration 18/100 ---
+Prompt: many pipes, many enemies, no blocks, some rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_17.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_17.png
+Analysis completed.
+
+--- Iteration 19/100 ---
+Prompt: no pipes, no enemies, little blocks, no rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_18.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_18.png
+Analysis completed.
+
+--- Iteration 20/100 ---
+Prompt: some pipes, some enemies, no blocks, some rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_19.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_19.png
+Analysis completed.
+
+--- Iteration 21/100 ---
+Prompt: many pipes, little enemies, no blocks, many rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_20.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_20.png
+Analysis completed.
+
+--- Iteration 22/100 ---
+Prompt: some pipes, some enemies, no blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_21.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_21.png
+Analysis completed.
+
+--- Iteration 23/100 ---
+Prompt: little pipes, no enemies, little blocks, some rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_22.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_22.png
+Analysis completed.
+
+--- Iteration 24/100 ---
+Prompt: no pipes, no enemies, many blocks, little rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_23.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_23.png
+Analysis completed.
+
+--- Iteration 25/100 ---
+Prompt: many pipes, no enemies, some blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_24.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_24.png
+Analysis completed.
+
+--- Iteration 26/100 ---
+Prompt: no pipes, no enemies, some blocks, no rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_25.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_25.png
+Analysis completed.
+
+--- Iteration 27/100 ---
+Prompt: little pipes, many enemies, some blocks, many rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_26.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_26.png
+Analysis completed.
+
+--- Iteration 28/100 ---
+Prompt: little pipes, little enemies, some blocks, many rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_27.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_27.png
+Analysis completed.
+
+--- Iteration 29/100 ---
+Prompt: no pipes, no enemies, many blocks, little rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_28.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_28.png
+Analysis completed.
+
+--- Iteration 30/100 ---
+Prompt: little pipes, some enemies, some blocks, no rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_29.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_29.png
+Analysis completed.
+
+--- Iteration 31/100 ---
+Prompt: little pipes, little enemies, no blocks, little rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_30.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_30.png
+Analysis completed.
+
+--- Iteration 32/100 ---
+Prompt: no pipes, little enemies, little blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_31.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_31.png
+Analysis completed.
+
+--- Iteration 33/100 ---
+Prompt: no pipes, some enemies, some blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_32.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_32.png
+Analysis completed.
+
+--- Iteration 34/100 ---
+Prompt: many pipes, some enemies, some blocks, many rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_33.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_33.png
+Analysis completed.
+
+--- Iteration 35/100 ---
+Prompt: many pipes, little enemies, some blocks, no rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_34.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_34.png
+Analysis completed.
+
+--- Iteration 36/100 ---
+Prompt: many pipes, no enemies, little blocks, some rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_35.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_35.png
+Analysis completed.
+
+--- Iteration 37/100 ---
+Prompt: no pipes, some enemies, some blocks, many rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_36.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_36.png
+Analysis completed.
+
+--- Iteration 38/100 ---
+Prompt: some pipes, little enemies, many blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_37.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_37.png
+Analysis completed.
+
+--- Iteration 39/100 ---
+Prompt: many pipes, no enemies, no blocks, little rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_38.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_38.png
+Analysis completed.
+
+--- Iteration 40/100 ---
+Prompt: little pipes, little enemies, no blocks, little rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_39.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_39.png
+Analysis completed.
+
+--- Iteration 41/100 ---
+Prompt: little pipes, no enemies, some blocks, many rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_40.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_40.png
+Analysis completed.
+
+--- Iteration 42/100 ---
+Prompt: some pipes, some enemies, many blocks, many rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_41.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_41.png
+Analysis completed.
+
+--- Iteration 43/100 ---
+Prompt: many pipes, some enemies, some blocks, many rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_42.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_42.png
+Analysis completed.
+
+--- Iteration 44/100 ---
+Prompt: some pipes, many enemies, no blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_43.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_43.png
+Analysis completed.
+
+--- Iteration 45/100 ---
+Prompt: many pipes, many enemies, no blocks, many rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_44.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_44.png
+Analysis completed.
+
+--- Iteration 46/100 ---
+Prompt: some pipes, some enemies, no blocks, no rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_45.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_45.png
+Analysis completed.
+
+--- Iteration 47/100 ---
+Prompt: some pipes, some enemies, some blocks, some rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_46.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_46.png
+Analysis completed.
+
+--- Iteration 48/100 ---
+Prompt: no pipes, many enemies, some blocks, many rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_47.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_47.png
+Analysis completed.
+
+--- Iteration 49/100 ---
+Prompt: many pipes, some enemies, many blocks, many rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_48.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_48.png
+Analysis completed.
+
+--- Iteration 50/100 ---
+Prompt: some pipes, many enemies, many blocks, little rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_49.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_49.png
+Analysis completed.
+
+--- Iteration 51/100 ---
+Prompt: little pipes, no enemies, many blocks, some rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_50.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_50.png
+Analysis completed.
+
+--- Iteration 52/100 ---
+Prompt: little pipes, some enemies, some blocks, some rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_51.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_51.png
+Analysis completed.
+
+--- Iteration 53/100 ---
+Prompt: some pipes, no enemies, no blocks, little rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_52.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_52.png
+Analysis completed.
+
+--- Iteration 54/100 ---
+Prompt: no pipes, no enemies, some blocks, little rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_53.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_53.png
+Analysis completed.
+
+--- Iteration 55/100 ---
+Prompt: some pipes, many enemies, many blocks, little rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_54.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_54.png
+Analysis completed.
+
+--- Iteration 56/100 ---
+Prompt: many pipes, little enemies, many blocks, some rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_55.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_55.png
+Analysis completed.
+
+--- Iteration 57/100 ---
+Prompt: some pipes, no enemies, little blocks, no rects, no coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_56.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_56.png
+Analysis completed.
+
+--- Iteration 58/100 ---
+Prompt: little pipes, many enemies, some blocks, many rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_57.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_57.png
+Analysis completed.
+
+--- Iteration 59/100 ---
+Prompt: many pipes, little enemies, some blocks, many rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_58.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_58.png
+Analysis completed.
+
+--- Iteration 60/100 ---
+Prompt: little pipes, some enemies, many blocks, little rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_59.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_59.png
+Analysis completed.
+
+--- Iteration 61/100 ---
+Prompt: little pipes, little enemies, little blocks, no rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_60.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_60.png
+Analysis completed.
+
+--- Iteration 62/100 ---
+Prompt: no pipes, little enemies, little blocks, many rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_61.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_61.png
+Analysis completed.
+
+--- Iteration 63/100 ---
+Prompt: some pipes, little enemies, many blocks, some rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_62.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_62.png
+Analysis completed.
+
+--- Iteration 64/100 ---
+Prompt: many pipes, no enemies, little blocks, little rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_63.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_63.png
+Analysis completed.
+
+--- Iteration 65/100 ---
+Prompt: little pipes, some enemies, some blocks, no rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_64.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_64.png
+Analysis completed.
+
+--- Iteration 66/100 ---
+Prompt: many pipes, many enemies, many blocks, no rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_65.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_65.png
+Analysis completed.
+
+--- Iteration 67/100 ---
+Prompt: some pipes, little enemies, many blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_66.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_66.png
+Analysis completed.
+
+--- Iteration 68/100 ---
+Prompt: many pipes, many enemies, some blocks, many rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_67.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_67.png
+Analysis completed.
+
+--- Iteration 69/100 ---
+Prompt: many pipes, many enemies, no blocks, little rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_68.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_68.png
+Analysis completed.
+
+--- Iteration 70/100 ---
+Prompt: no pipes, little enemies, some blocks, no rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_69.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_69.png
+Analysis completed.
+
+--- Iteration 71/100 ---
+Prompt: little pipes, many enemies, some blocks, some rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_70.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_70.png
+Analysis completed.
+
+--- Iteration 72/100 ---
+Prompt: some pipes, many enemies, no blocks, some rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_71.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_71.png
+Analysis completed.
+
+--- Iteration 73/100 ---
+Prompt: many pipes, little enemies, some blocks, many rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_72.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_72.png
+Analysis completed.
+
+--- Iteration 74/100 ---
+Prompt: some pipes, some enemies, no blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_73.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_73.png
+Analysis completed.
+
+--- Iteration 75/100 ---
+Prompt: little pipes, some enemies, many blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_74.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_74.png
+Analysis completed.
+
+--- Iteration 76/100 ---
+Prompt: many pipes, some enemies, many blocks, many rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_75.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_75.png
+Analysis completed.
+
+--- Iteration 77/100 ---
+Prompt: little pipes, no enemies, many blocks, many rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_76.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_76.png
+Analysis completed.
+
+--- Iteration 78/100 ---
+Prompt: many pipes, little enemies, no blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_77.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_77.png
+Analysis completed.
+
+--- Iteration 79/100 ---
+Prompt: little pipes, no enemies, no blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_78.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_78.png
+Analysis completed.
+
+--- Iteration 80/100 ---
+Prompt: no pipes, little enemies, no blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_79.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_79.png
+Analysis completed.
+
+--- Iteration 81/100 ---
+Prompt: many pipes, little enemies, little blocks, some rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_80.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_80.png
+Analysis completed.
+
+--- Iteration 82/100 ---
+Prompt: no pipes, little enemies, little blocks, no rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_81.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_81.png
+Analysis completed.
+
+--- Iteration 83/100 ---
+Prompt: some pipes, some enemies, little blocks, no rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_82.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_82.png
+Analysis completed.
+
+--- Iteration 84/100 ---
+Prompt: little pipes, many enemies, some blocks, no rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_83.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_83.png
+Analysis completed.
+
+--- Iteration 85/100 ---
+Prompt: little pipes, some enemies, some blocks, many rects, some coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_84.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_84.png
+Analysis completed.
+
+--- Iteration 86/100 ---
+Prompt: many pipes, little enemies, no blocks, some rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_85.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_85.png
+Analysis completed.
+
+--- Iteration 87/100 ---
+Prompt: no pipes, many enemies, many blocks, little rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_86.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_86.png
+Analysis completed.
+
+--- Iteration 88/100 ---
+Prompt: some pipes, many enemies, no blocks, some rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_87.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_87.png
+Analysis completed.
+
+--- Iteration 89/100 ---
+Prompt: no pipes, many enemies, little blocks, no rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_88.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_88.png
+Analysis completed.
+
+--- Iteration 90/100 ---
+Prompt: little pipes, some enemies, some blocks, little rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_89.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_89.png
+Analysis completed.
+
+--- Iteration 91/100 ---
+Prompt: many pipes, little enemies, no blocks, some rects, no coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_90.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_90.png
+Analysis completed.
+
+--- Iteration 92/100 ---
+Prompt: many pipes, no enemies, little blocks, many rects, many coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_91.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_91.png
+Analysis completed.
+
+--- Iteration 93/100 ---
+Prompt: many pipes, many enemies, some blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_92.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_92.png
+Analysis completed.
+
+--- Iteration 94/100 ---
+Prompt: no pipes, many enemies, little blocks, many rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_93.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_93.png
+Analysis completed.
+
+--- Iteration 95/100 ---
+Prompt: no pipes, no enemies, little blocks, no rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_94.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_94.png
+Analysis completed.
+
+--- Iteration 96/100 ---
+Prompt: no pipes, little enemies, many blocks, many rects, some coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_95.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_95.png
+Analysis completed.
+
+--- Iteration 97/100 ---
+Prompt: no pipes, no enemies, no blocks, many rects, little coins, high elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_96.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_96.png
+Analysis completed.
+
+--- Iteration 98/100 ---
+Prompt: no pipes, many enemies, no blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_97.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_97.png
+Analysis completed.
+
+--- Iteration 99/100 ---
+Prompt: little pipes, no enemies, little blocks, some rects, many coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_98.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_98.png
+Analysis completed.
+
+--- Iteration 100/100 ---
+Prompt: little pipes, many enemies, many blocks, no rects, little coins, low elevation, 
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_99.txt
+Saved: /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/structure_99.png
+Analysis completed.
+
+========================================
+       FINAL ACCURACY STATISTICS       
+========================================
+Pipe      : 44/100 correct (44.0%)  | 平均視窗符合率 39.0%
+Enemy     : 45/100 correct (45.0%)  | 平均視窗符合率 40.8%
+Block     : 46/100 correct (46.0%)  | 平均視窗符合率 40.5%
+Rect      : 36/100 correct (36.0%)  | 平均視窗符合率 32.2%
+Coin      : 41/100 correct (41.0%)  | 平均視窗符合率 39.0%
+Elevation : 60/100 correct (60.0%)  | 平均視窗符合率 52.8%
+
+Full report saved to /home/isslab411/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure/same_path_test/prompt_check_report.txt
+(marioexpert) (Kube_B) isslab411@isslab411-MS-7E25:~/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure (IP:137)$ 
+(marioexpert) (Kube_B) isslab411@isslab411-MS-7E25:~/Downloads/mariogpt_two_expert/20260826_Mriogpt_Dou-expert/structure-expert/mario_gpt_structure (IP:137)$ 
